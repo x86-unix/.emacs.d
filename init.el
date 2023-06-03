@@ -283,7 +283,6 @@
 
 ;; Flycheckの設定
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode)
   :config
   (add-hook 'python-mode-hook
