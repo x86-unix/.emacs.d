@@ -210,7 +210,6 @@
   :if (display-graphic-p))
 
 (use-package neotree
-  :ensure t
   :bind (("C-c t" . neotree-toggle))  ;; C-c t で neotree を開閉
   :config
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))  ;; グラフィック表示が可能ならアイコンを、そうでなければ矢印を使用
