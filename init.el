@@ -330,13 +330,27 @@
     (interactive)
     (or (copilot-accept-completion)
         (company-indent-or-complete-common nil)))
+  (global-set-key (kbd "C-TAB") #'my-tab)
+  (global-set-key (kbd "C-<tab>") #'my-tab)
   (with-eval-after-load 'company
-    (delq 'company-preview-if-just-one-frontend company-frontends)
-    (define-key company-mode-map (kbd "<tab>") 'my-tab)
-    (define-key company-mode-map (kbd "TAB") 'my-tab)
-    (define-key company-active-map (kbd "<tab>") 'my-tab)
-    (define-key company-active-map (kbd "TAB") 'my-tab))
+    (define-key company-active-map (kbd "C-TAB") #'my-tab)
+    (define-key company-active-map (kbd "C-<tab>") #'my-tab)
+    (define-key company-mode-map (kbd "C-TAB") #'my-tab)
+    (define-key company-mode-map (kbd "C-<tab>") #'my-tab))
     ; プログラムモードの場合、copilot-modeを実行
-    (add-hook 'prog-mode-hook 'copilot-mode))
+  (add-hook 'prog-mode-hook 'copilot-mode))
+
+(defun copilot-toggle ()
+  "Toggle the GitHub Copilot on/off."
+  (interactive)
+  (if (bound-and-true-p copilot-mode)
+      (progn
+        (setq copilot-mode nil)
+        (message "GitHub Copilot disabled."))
+    (progn
+      (setq copilot-mode t)
+      (message "GitHub Copilot enabled."))))
+
+(global-set-key (kbd "C-c p") 'copilot-toggle) ; C-c p copilot on/off
 
 ;;;;;;;;; Auto generated 
