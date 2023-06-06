@@ -1,3 +1,6 @@
+;; tramp失敗時のtimeout
+(setq tramp-connection-timeout 5)
+
 ;; 起動時windowサイズ
 (setq initial-frame-alist
   (append (list
@@ -41,6 +44,9 @@
 ;; use-package 
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+;; quelpa-use-package
+(use-package quelpa-use-package)
 
 ;; UTF-8
 (set-language-environment "Japanese")
