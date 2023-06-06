@@ -310,4 +310,31 @@
   :init
   (add-to-list 'company-backends 'company-ansible))
 
+;; for copilot
+; nvm でインストールした場合path指定
+(setq copilot-node-executable "/home/vagrant/.nvm/versions/node/v16.20.0/bin/node")
+; proxy配下の環境では以下が必要 copilot-loginができない
+(setq copilot-network-proxy
+      '(:host "192.xxx.xxx.xxx" :port 3128))
+
+; quelpa で cpilotをインストールすると、agent.jsを見つけられないので、以下のようにシンボリックを張る
+; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
+; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+(use-package copilot
+  :quelpa
+  (copilot :fetcher github :repo "zerolfx/copilot.el")
+  :config
+  (defun my-tab ()
+    (interactive)
+    (or (copilot-accept-completion)
+        (company-indent-or-complete-common nil)))
+  (with-eval-after-load 'company
+    (delq 'company-preview-if-just-one-frontend company-frontends)
+    (define-key company-mode-map (kbd "<tab>") 'my-tab)
+    (define-key company-mode-map (kbd "TAB") 'my-tab)
+    (define-key company-active-map (kbd "<tab>") 'my-tab)
+    (define-key company-active-map (kbd "TAB") 'my-tab))
+    ;プログラムモードの場合、copilot-modeを実行
+    (add-hook 'prog-mode-hook 'copilot-mode))
+
 ;;;;;;;;; Auto generated 
