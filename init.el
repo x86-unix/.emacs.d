@@ -317,7 +317,7 @@
 (setq copilot-network-proxy
       '(:host "192.xxx.xxx.xxx" :port 3128))
 
-; quelpa で cpilotをインストールすると、agent.jsを見つけられないので、以下のようにシンボリックを張る
+; quelpa で copilotをインストールすると、agent.jsを見つけられないので、以下のようにシンボリックを張る
 ; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
 ; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
 (use-package copilot
@@ -334,7 +334,7 @@
     (define-key company-mode-map (kbd "TAB") 'my-tab)
     (define-key company-active-map (kbd "<tab>") 'my-tab)
     (define-key company-active-map (kbd "TAB") 'my-tab))
-    ;プログラムモードの場合、copilot-modeを実行
+    ; プログラムモードの場合、copilot-modeを実行
     (add-hook 'prog-mode-hook 'copilot-mode))
 
 ;;;;;;;;; Auto generated 
