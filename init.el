@@ -57,8 +57,8 @@
 
 ;; font
 (when (eq system-type 'gnu/linux) ; for Linux
-  (set-frame-font "Ricty Diminished")
-  (add-to-list 'default-frame-alist '(font . "Ricty Diminished-12")))
+  (set-frame-font "Ricty")
+  (add-to-list 'default-frame-alist '(font . "Ricty-12")))
 
 ;; bar
 (tool-bar-mode 0)
