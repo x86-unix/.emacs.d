@@ -1,7 +1,7 @@
-;; tramp失敗時のtimeout
+;; tramp fail timeout
 (setq tramp-connection-timeout 5)
 
-;; 起動時windowサイズ
+;; Window size
 (setq initial-frame-alist
   (append (list
   '(width . 100) ;; ウィンドウ幅
@@ -12,7 +12,7 @@
   initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 
-;; 初期パッケージインストール
+;; initial install packages
 (defvar my-install-package-list
   '(
     use-package
@@ -78,7 +78,7 @@
 ; mini buffer内でもbackspaceする
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
-;;on mouse yank
+;; on mouse yank
 (setq mouse-drag-copy-region t)
 
 ;; disable beep sound
@@ -249,6 +249,27 @@
   :config
   (company-quickhelp-mode t))
 
+;; company-quickhelp
+(use-package company-quickhelp
+  :after company
+  :config
+  (company-quickhelp-mode t))
+
+;; disable-company-mode lists
+(defvar my-disable-company-modes 
+  '(shell-mode
+    eshell-mode
+    term-mode
+    )
+  )
+(defun my-disable-company-in-selected-modes ()
+  (when (apply 'derived-mode-p my-disable-company-modes)
+    (company-mode -1)))
+(mapc (lambda (mode)
+        (add-hook (intern (concat (symbol-name mode) "-hook"))
+                  'my-disable-company-in-selected-modes))
+      my-disable-company-modes)
+
 ;; company-shell
 (use-package company-shell
   :config
@@ -276,7 +297,7 @@
   :bind (("C-c r" . regex-tool)))
 
 ;; for python
-;事前に、 pip install virtualenv が必要 (window,linux共通)
+;事前に pip install virtualenv が必要 (mac,windows,linux共通)
 ;company-jedi
 (use-package company-jedi
   :commands company-jedi
@@ -287,7 +308,7 @@
       (add-to-list 'company-backends 'company-jedi)))
   (add-hook 'python-mode-hook 'use-package-company-add-company-jedi))
 
-;; Flycheckの設定
+;; Flycheck
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
