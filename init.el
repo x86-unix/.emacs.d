@@ -284,16 +284,10 @@
 ;; shell-pop
 (use-package shell-pop
   :init
+  (setq shell-pop-shell-type '("term" "*term*" (lambda () (term shell-pop-term-shell))))
+  (setq shell-pop-term-shell "/bin/bash")
   (setq shell-pop-full-span t)
   :bind (("C-c s" . shell-pop)))
-
-;; Modify keybindings in shell mode
-(add-hook 'shell-mode-hook 
-  (lambda ()
-    (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
-    (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
-    (define-key shell-mode-map (kbd "TAB") 'completion-at-point)
-    (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)))
 
 ;; black
 (use-package blacken
