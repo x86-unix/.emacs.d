@@ -109,6 +109,10 @@
   (recenter))
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
 
+;; ace-window
+(use-package ace-window
+  :bind ("C-x o" . ace-window))
+
 ;; Windowサイズ変更
 (defun window-resizer ()
   "Control window size and position."
