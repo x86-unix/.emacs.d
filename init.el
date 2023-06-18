@@ -301,10 +301,15 @@
 ;; for python
 ;事前に pip install virtualenv が必要 (mac,windows,linux共通)
 ;company-jedi
+(defun my/install-jedi-server-if-needed ()
+  "Check if jedi server is installed. If not, install it."
+  (unless (file-exists-p "~/.emacs.d/.python-environments/default/")
+    (jedi:install-server)))
+
 (use-package company-jedi
   :commands company-jedi
   :init
-  (jedi:install-server)
+  (my/install-jedi-server-if-needed)
   (defun use-package-company-add-company-jedi ()
     (unless (member 'company-jedi company-backends)
       (add-to-list 'company-backends 'company-jedi)))
