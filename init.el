@@ -292,7 +292,8 @@
   (lambda ()
     (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
     (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
-    (define-key shell-mode-map (kbd "TAB") 'completion-at-point)))
+    (define-key shell-mode-map (kbd "TAB") 'completion-at-point)
+    (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)))
 
 ;; black
 (use-package blacken
