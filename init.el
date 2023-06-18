@@ -287,6 +287,15 @@
   (setq shell-pop-full-span t)
   :bind (("C-c s" . shell-pop)))
 
+;; Modify keybindings in shell mode
+(add-hook 'shell-mode-hook 
+  (lambda ()
+    (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
+    (define-key shell-mode-map (kbd "C-n") 'comint-next-input)
+    (define-key shell-mode-map (kbd "TAB") 'completion-at-point)
+  )
+)
+
 ;; black
 (use-package blacken
   :config
