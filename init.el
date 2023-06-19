@@ -377,8 +377,6 @@
     (define-key company-active-map (kbd "C-<tab>") #'my-tab)
     (define-key company-mode-map (kbd "C-TAB") #'my-tab)
     (define-key company-mode-map (kbd "C-<tab>") #'my-tab))
-    ; プログラムモードの場合、copilot-modeを実行
-  (add-hook 'prog-mode-hook 'copilot-mode))
 
 (defun copilot-toggle ()
   "Toggle the GitHub Copilot on/off."
@@ -390,7 +388,6 @@
     (progn
       (setq copilot-mode t)
       (message "GitHub Copilot enabled."))))
-
-(global-set-key (kbd "C-c p") 'copilot-toggle) ; C-c p copilot on/off
+(global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
 ;;;;;;;;; Auto generated 
