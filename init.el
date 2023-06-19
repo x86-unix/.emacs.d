@@ -361,14 +361,14 @@
 
 (setq copilot-node-executable
       (cond
-       ((eq system-type 'windows-nt) "/c/Program Files/nodejs/node.exe")
+       ((eq system-type 'windows-nt) "C:\\Program Files\\nodejs\\node.exe")
        ((eq system-type 'gnu/linux) (get-node-path))
        ((eq system-type 'darwin) "/usr/local/bin/node")
        (t "/usr/local/bin/node")))
 
 ; The following is required in the environment under the proxy Copilot-login is not possible
 (setq copilot-network-proxy
-      '(:host "192.xxx.xxx.xxx" :port 3128))
+      '(:host "proxy" :port 3128))
 
 ; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
 ; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
