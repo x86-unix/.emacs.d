@@ -4,10 +4,10 @@
 ;; Window size
 (setq initial-frame-alist
   (append (list
-  '(width . 100) ;; ウィンドウ幅
-  '(height . 55) ;; ウィンドウ高さ
-  '(top . 30) ;; 表示位置
-  '(left . 1100) ;; 表示位置
+  '(width . 100) ; window width
+  '(height . 55) ; window height
+  '(top . 30) ; display position top
+  '(left . 1100) ; display position left
   )
   initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
@@ -29,7 +29,7 @@
     (package-install pkg)))
 
 ;; Load-Path
-; load-pathを再帰的に自動追加
+; Auto add load-path recursively
 (defun add-to-load-path (&rest paths)
   (let (path)
     (dolist (path paths paths)
@@ -37,7 +37,7 @@
         (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path) (normal-top-level-add-subdirs-to-load-path))))))
 
-;; elpa配下をロードパスに指定
+;; Specify the load path under elpa
 ;(add-to-load-path "elpa" "snippets")
 (add-to-load-path "elpa")
 
@@ -64,7 +64,7 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; タイトルバーにファイルのフルパス表示
+;; Display full path of file in title bar
 (setq frame-title-format "%f")
 
 ;; no messages
@@ -74,8 +74,8 @@
 ;; mode line
 (display-time-mode t)
 
-;; C-h を Backspace へ割当てる
-; mini buffer内でもbackspaceする
+;; assign C-h to Backspace
+; Backspace even in mini buffer
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
 
 ;; on mouse yank
@@ -84,21 +84,20 @@
 ;; disable beep sound
 (setq visible-bell t)
 
-;; Tabや全角空白などを強調表示
+;; Highlight tabs, double-byte spaces, etc.
 (global-whitespace-mode t)
 
 (setq whitespace-style
   '(face tabs tab-mark spaces space-mark newline newline-mark))
 (setq whitespace-display-mappings
-  '((space-mark ?\u3000 [?□])  ; 全角スペース形状
-   ;(space-mark ?\u0020 [?\xB7])  ; 半角スペース形状
-   (newline-mark ?\n   [?↓?\n]) ; 改行記号形状
-   (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB形状
+  '((space-mark ?\u3000 [?□])  ; Full-width space shape
+   ;(space-mark ?\u0020 [?\xB7])  ; Half-width space shape
+   (newline-mark ?\n   [?↓?\n]) ; carriage return shape
+   (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
    )
 )
 
-;; 折り返し表示のトグル動作
-; デフォルトは折り返ししない 
+;; Toggle behavior of word wrap
 (setq-default truncate-lines t)
 (defun toggle-truncate-lines ()
   "Toggle truncat lines"
@@ -109,11 +108,11 @@
   (recenter))
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
 
-;; ace-window
+;; Ace-window
 (use-package ace-window
   :bind ("C-x o" . ace-window))
 
-;; Windowサイズ変更
+;; Resize Window
 (defun window-resizer ()
   "Control window size and position."
   (interactive)
@@ -144,25 +143,25 @@
 ;; Tab
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-;; 自動バックアップ設定
-; バックアップファイルとオートセーブファイルを ~/.emacs.d/backups/ へ集める
+;; Automatic backup settings
+; Collect backup files and autosave files into ~/.emacs.d/backups/
 (add-to-list 'backup-directory-alist
              (cons "." "~/.emacs.d/backups/"))
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
-; フレームタイトルの設定
+;; Setting the frame title
 (setq frame-title-format "%b")
-; バックアップのバージョン管理を行う
+;; Perform backup version control
 (setq version-control t)
-; 新しいものをいくつ残すか
+;; how many new ones to leave
 (setq kept-new-versions 10)
-; 古いものをいくつ残すか
+;; how many old ones to leave
 (setq kept-old-versions 10)
-; 古いバージョンを消去するのに確認を求めない。
+;; Do not ask for confirmation to erase old versions.
 (setq delete-old-versions t)
 
-;; 行番号の表示
+;; Show line numbers
 (global-linum-mode t)
 (setq linum-format "%3d  ")
 
@@ -197,11 +196,11 @@
   :custom
   (highlight-indent-guides-method 'column))
 
-;; dired 最近開いたファイル
+;; dired
 ; recentf-ext
 (use-package recentf-ext
   :config
-  (setq recentf-max-saved-items 100) ; 100個まで履歴として保存 
+  (setq recentf-max-saved-items 100) ; Save up to 100 as history
   :bind
   ("C-c n" . recentf-open-files)
 )
@@ -214,28 +213,28 @@
   ("C-c j" . open-junk-file))
 
 ;; all-the-icons
-; neotree などで必要なフォント
-; M-x all-the-icons-install-fonts でフォントを手動インストールする必要がある
+; Required fonts for neotree etc.
+; need to manually install fonts with M-x all-the-icons-install-fonts
 (use-package all-the-icons
   :if (display-graphic-p))
 
 (use-package neotree
-  :bind (("C-c t" . neotree-toggle))  ;; C-c t で neotree を開閉
+  :bind (("C-c t" . neotree-toggle)) 
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))  ;; グラフィック表示が可能ならアイコンを、そうでなければ矢印を使用
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))) ; Use icons if graphic display is possible, otherwise use arrows
 
 ;; company
 (use-package company
   :init
   :config
   (setq company-dabbrev-downcase nil)
-  ; 遅延なしにする。
+  ; without delay.
   (setq company-idle-delay 0)
-  ; デフォルトは4。より少ない文字数から補完が始まる様にする。
+  ; Default is 4. Make completion start from fewer characters.
   (setq company-minimum-prefix-length 2)
-  ; 候補の一番下でさらに下に行こうとすると一番上に戻る。
+  ; If you try to go further down at the bottom of the candidate, it will return to the top.
   (setq company-selection-wrap-around t)
-  ; 番号を表示する。
+  ; Show number.
   (setq company-show-numbers t)
   (global-company-mode)
   :bind (:map company-active-map
@@ -299,13 +298,13 @@
   :config
   (add-hook 'python-mode-hook 'blacken-mode))
 
-;; 正規表現支援
+;; regular expression support
 (use-package regex-tool
   :bind (("C-c r" . regex-tool)))
 
 ;; for python
-;事前に pip install virtualenv が必要 (mac,windows,linux共通)
-;company-jedi
+; Need pip install virtualenv in advance (common to mac,windows,linux)
+; company-jedi
 (defun my/install-jedi-server-if-needed ()
   "Check if jedi server is installed. If not, install it."
   (let* ((default-dir (cond
@@ -352,7 +351,7 @@
   (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-; nvm でインストールした場合はpath指定必須
+; path must be specified when installed with nvm
 (defun get-node-path ()
   "Find the path to Node.js binary."
   (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
@@ -367,11 +366,11 @@
        ((eq system-type 'darwin) "/usr/local/bin/node")
        (t "/usr/local/bin/node")))
 
-; proxy配下の環境では以下が必要 copilot-loginができない
+; The following is required in the environment under the proxy Copilot-login is not possible
 (setq copilot-network-proxy
       '(:host "192.xxx.xxx.xxx" :port 3128))
 
-; quelpa で copilotをインストールすると、agent.jsを見つけられないので、以下のようにシンボリックを張る
+; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
 ; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
 ; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
 (use-package copilot
