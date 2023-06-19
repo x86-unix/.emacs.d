@@ -387,7 +387,9 @@
     (define-key company-active-map (kbd "C-TAB") #'my-tab)
     (define-key company-active-map (kbd "C-<tab>") #'my-tab)
     (define-key company-mode-map (kbd "C-TAB") #'my-tab)
-    (define-key company-mode-map (kbd "C-<tab>") #'my-tab)))
+    (define-key company-mode-map (kbd "C-<tab>") #'my-tab))
+    ; when program mode copilot-mode enabled
+    (add-hook 'prog-mode-hook 'copilot-mode))    
 
 (defun copilot-toggle ()
   "Toggle the GitHub Copilot on/off."
