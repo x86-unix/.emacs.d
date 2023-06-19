@@ -352,10 +352,13 @@
   (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-; nvm でインストールした場合path指定
-; sample. Windows
-; (setq copilot-node-executable "C:\\Program Files\\nodejs\\node.exe")
-(setq copilot-node-executable "/home/vagrant/.nvm/versions/node/v16.20.0/bin/node")
+; nvm でインストールした場合はpath指定
+(setq copilot-node-executable
+      (cond
+       ((eq system-type 'windows-nt) "/c/Program Files/nodejs/node.exe")
+       ((eq system-type 'gnu/linux) "/home/vagrant/.nvm/versions/node/v16.20.0/bin/node")
+       ((eq system-type 'darwin) "/usr/local/bin/node")
+       (t "/usr/local/bin/node")))
 ; proxy配下の環境では以下が必要 copilot-loginができない
 (setq copilot-network-proxy
       '(:host "192.xxx.xxx.xxx" :port 3128))
