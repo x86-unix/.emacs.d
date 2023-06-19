@@ -352,13 +352,21 @@
   (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-; nvm でインストールした場合はpath指定
+; nvm でインストールした場合はpath指定必須
+(defun get-node-path ()
+  "Find the path to Node.js binary."
+  (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
+         (dirs (directory-files base-dir t "^v.*")))
+    (when dirs
+      (concat (car dirs) "/bin/node"))))
+
 (setq copilot-node-executable
       (cond
        ((eq system-type 'windows-nt) "/c/Program Files/nodejs/node.exe")
-       ((eq system-type 'gnu/linux) "/home/vagrant/.nvm/versions/node/v16.20.0/bin/node")
+       ((eq system-type 'gnu/linux) (get-node-path))
        ((eq system-type 'darwin) "/usr/local/bin/node")
        (t "/usr/local/bin/node")))
+
 ; proxy配下の環境では以下が必要 copilot-loginができない
 (setq copilot-network-proxy
       '(:host "192.xxx.xxx.xxx" :port 3128))
