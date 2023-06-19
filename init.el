@@ -1,4 +1,4 @@
-;; tramp fail timeout
+;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
 
 ;; Window size
