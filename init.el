@@ -307,8 +307,16 @@
 ;company-jedi
 (defun my/install-jedi-server-if-needed ()
   "Check if jedi server is installed. If not, install it."
-  (unless (file-exists-p "~/.emacs.d/.python-environments/default/")
-    (jedi:install-server)))
+  (let* ((default-dir (cond
+                       ((eq system-type 'windows-nt)
+                        "~/AppData/Roaming/.emacs.d/.python-environments/default")
+                       ((eq system-type 'darwin)
+                        "~/.emacs.d/.python-environments/default/")
+                       (t
+                        "~/.emacs.d/.python-environments/default/")))
+         (jedi-dir (expand-file-name default-dir)))
+    (unless (file-exists-p jedi-dir)
+      (jedi:install-server))))
 
 (use-package company-jedi
   :commands company-jedi
