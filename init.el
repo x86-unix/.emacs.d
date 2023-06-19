@@ -288,8 +288,9 @@
 ;; shell-pop
 (use-package shell-pop
   :init
-  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
-  (setq shell-pop-term-shell "/bin/bash")
+  (unless (eq system-type 'windows-nt)
+    (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell)))
+          shell-pop-term-shell "/bin/bash"))
   (setq shell-pop-full-span t)
   :bind (("C-c s" . shell-pop)))
 
