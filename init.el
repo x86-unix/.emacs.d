@@ -310,7 +310,7 @@
   "Check if jedi server is installed. If not, install it."
   (let* ((default-dir (cond
                        ((eq system-type 'windows-nt)
-                        "~/AppData/Roaming/.emacs.d/.python-environments/default")
+                        (concat (getenv "USERPROFILE") "/AppData/Roaming/.emacs.d/.python-environments/default"))
                        ((eq system-type 'darwin)
                         "~/.emacs.d/.python-environments/default/")
                        (t
