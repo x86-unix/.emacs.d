@@ -58,7 +58,7 @@
 ;; font
 (when (eq system-type 'gnu/linux) ; for Linux
   (set-frame-font "Hack")
-  (add-to-list 'default-frame-alist '(font . "Hack-12")))
+  (add-to-list 'default-frame-alist '(font . "Hack-14")))
 
 ;; bar
 (tool-bar-mode 0)
@@ -288,9 +288,10 @@
 (use-package shell-pop
   :init
   (unless (eq system-type 'windows-nt)
-    (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell)))
-          shell-pop-term-shell "/bin/bash"))
-  (setq shell-pop-full-span t)
+    (setq shell-pop-shell-type
+          (cond ((eq system-type 'gnu/linux) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/bash"))))
+                ((eq system-type 'darwin) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/zsh"))))))
+    (setq shell-pop-full-span t))
   :bind (("C-c s" . shell-pop)))
 
 ;; black
