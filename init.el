@@ -162,8 +162,17 @@
 (setq delete-old-versions t)
 
 ;; Show line numbers
-(global-linum-mode t)
-(setq linum-format "%3d  ")
+;; Use `display-line-numbers-mode` if Emacs version is 26.1 or later
+(if (version<= "26.1" emacs-version)
+    (progn
+      (global-display-line-numbers-mode)
+      ;; 0: normal line number display
+      ;; t: do not display line numbers
+      (setq display-line-numbers 'relative)
+    )
+  ;; Use `global-linum-mode` for versions earlier than 26.1
+  (global-linum-mode)
+)
 
 ;; Theme
 (use-package doom-themes
