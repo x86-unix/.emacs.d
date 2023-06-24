@@ -305,7 +305,7 @@
   (unless (eq system-type 'windows-nt)
     (setq shell-pop-shell-type
           (cond ((eq system-type 'gnu/linux) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/bash"))))
-                ((eq system-type 'android) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/bash"))))
+                ((eq system-type 'android) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/system/bin/sh"))))
                 ((eq system-type 'darwin) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/zsh"))))))
     (setq shell-pop-full-span t))
   :bind (("C-c s" . shell-pop)))
