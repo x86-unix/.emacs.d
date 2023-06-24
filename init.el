@@ -36,6 +36,12 @@
       (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
         (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path) (normal-top-level-add-subdirs-to-load-path))))))
+; Emacs on Android - use with Termux
+(when (string-equal system-type "android")
+  ;; Add Termux binaries to PATH environment
+  (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
+    (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
+    (setq exec-path (append exec-path (list termuxpath)))))
 
 ;; Specify the load path under elpa
 ;(add-to-load-path "elpa" "snippets")
