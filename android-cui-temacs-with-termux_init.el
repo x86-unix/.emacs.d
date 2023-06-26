@@ -36,7 +36,7 @@
 ;(add-to-load-path "elpa" "snippets")
 (add-to-load-path "elpa")
 
-;; use-package 
+;; use-package
 (require 'use-package)
 (setq use-package-always-ensure t)
 
@@ -49,11 +49,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
-
-;; font
-(when (eq system-type 'android) ; for android
-  (set-frame-font "Hack")
-  (add-to-list 'default-frame-alist '(font . "Hack-14")))
 
 ;; bar
 (tool-bar-mode 0)
@@ -77,16 +72,6 @@
 
 ;; Highlight tabs, double-byte spaces, etc.
 (global-whitespace-mode t)
-
-(setq whitespace-style
-  '(face tabs tab-mark spaces space-mark newline newline-mark))
-(setq whitespace-display-mappings
-  '((space-mark ?\u3000 [?□])  ; Full-width space shape
-   ;(space-mark ?\u0020 [?\xB7])  ; Half-width space shape
-   (newline-mark ?\n   [?↓?\n]) ; carriage return shape
-   (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
-   )
-)
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines t)
@@ -212,14 +197,8 @@
   :bind
   ("C-c j" . open-junk-file))
 
-;; all-the-icons
-; Required fonts for neotree etc.
-; need to manually install fonts with M-x all-the-icons-install-fonts
-(use-package all-the-icons
-  :if (display-graphic-p))
-
 (use-package neotree
-  :bind (("C-c t" . neotree-toggle)) 
+  :bind (("C-c t" . neotree-toggle))
   :config
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))) ; Use icons if graphic display is possible, otherwise use arrows
 
@@ -246,14 +225,8 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
 
-;; company-quickhelp
-(use-package company-quickhelp
-  :after company
-  :config
-  (company-quickhelp-mode t))
-
 ;; disable-company-mode lists
-(defvar my-disable-company-modes 
+(defvar my-disable-company-modes
   '(shell-mode
     eshell-mode
     term-mode
@@ -278,16 +251,18 @@
   (progn
     (electric-pair-mode 1)))
 
-;; shell-pop
-(use-package shell-pop
-  :init
-  (unless (eq system-type 'windows-nt)
-    (setq shell-pop-shell-type
-          (cond ((eq system-type 'gnu/linux) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/bash"))))
-                ((eq system-type 'android) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/system/bin/sh"))))
-                ((eq system-type 'darwin) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/zsh"))))))
-    (setq shell-pop-full-span t))
-  :bind (("C-c s" . shell-pop)))
+;; shell-mode
+(defun shell-in-split-window ()
+  (interactive)
+  (split-window-below)
+  (other-window 1)
+  (if (not (get-buffer "*shell*"))
+      (progn
+        (shell)
+        (other-window 1))
+    (switch-to-buffer-other-window "*shell*")))
+
+(global-set-key (kbd "C-c s") 'shell-in-split-window)
 
 ;; black
 (use-package blacken
@@ -330,7 +305,7 @@
   :config
   (add-hook 'python-mode-hook
             (lambda ()
-              (setq flychec k-python-flake8-executable (executable-find "flake8"))
+              (setq flycheck-python-flake8-executable (executable-find "flake8"))
               (setq flycheck-python-pylint-executable (executable-find "pylint"))
               (setq flycheck-python-pycompile-executable (executable-find "python"))
               (flycheck-mode t))))
@@ -340,11 +315,11 @@
 (use-package company-terraform
   :init
   (company-terraform-init))
- 
+
 ;; for Ansible
 (use-package ansible)
 (use-package company-ansible
   :init
   (add-to-list 'company-backends 'company-ansible))
 
-;;;;;;;;; Auto generated 
+;;;;;;;;; Auto generated
