@@ -197,10 +197,12 @@
   :bind
   ("C-c j" . open-junk-file))
 
+;; neotree
 (use-package neotree
   :bind (("C-c t" . neotree-toggle))
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))) ; Use icons if graphic display is possible, otherwise use arrows
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)) ; Use icons if graphic display is possible, otherwise use arrows
+  (setq neo-show-hidden-files t)) ; Show hidden files by default
 
 ;; company
 (use-package company
