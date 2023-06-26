@@ -261,12 +261,6 @@
   :config
   (company-quickhelp-mode t))
 
-;; company-quickhelp
-(use-package company-quickhelp
-  :after company
-  :config
-  (company-quickhelp-mode t))
-
 ;; disable-company-mode lists
 (defvar my-disable-company-modes 
   '(shell-mode
