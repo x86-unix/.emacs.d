@@ -36,12 +36,6 @@
       (let ((default-directory (expand-file-name (concat user-emacs-directory path))))
         (add-to-list 'load-path default-directory)
         (if (fboundp 'normal-top-level-add-subdirs-to-load-path) (normal-top-level-add-subdirs-to-load-path))))))
-; Emacs on Android - use with Termux
-(when (string-equal system-type "android")
-  ;; Add Termux binaries to PATH environment
-  (let ((termuxpath "/data/data/com.termux/files/usr/bin"))
-    (setenv "PATH" (concat (getenv "PATH") ":" termuxpath))
-    (setq exec-path (append exec-path (list termuxpath)))))
 
 ;; Specify the load path under elpa
 ;(add-to-load-path "elpa" "snippets")
@@ -305,7 +299,6 @@
   (unless (eq system-type 'windows-nt)
     (setq shell-pop-shell-type
           (cond ((eq system-type 'gnu/linux) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/bash"))))
-                ((eq system-type 'android) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/system/bin/sh"))))
                 ((eq system-type 'darwin) '("ansi-term" "*ansi-term*" (lambda () (ansi-term "/bin/zsh"))))))
     (setq shell-pop-full-span t))
   :bind (("C-c s" . shell-pop)))
@@ -320,6 +313,7 @@
   :bind (("C-c r" . regex-tool)))
 
 ;; for python
+(setq python-indent-offset 4)
 ; Need pip install virtualenv in advance (common to mac,windows,linux)
 ; company-jedi
 (defun my/install-jedi-server-if-needed ()
