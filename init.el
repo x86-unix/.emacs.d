@@ -6,11 +6,13 @@
   (append (list
   '(width . 100) ; window width
   '(height . 55) ; window height
-  '(top . 30) ; display position top
-  '(left . 1100) ; display position left
   )
   initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
+
+;; Depth/length of evaluation result output
+(setq eval-expression-print-length nil)
+(setq eval-expression-print-level nil)
 
 ;; initial install packages
 (defvar my-install-package-list
