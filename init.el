@@ -372,8 +372,8 @@
        (t "/usr/local/bin/node")))
 
 ; The following is required in the environment under the proxy Copilot-login is not possible
-(setq copilot-network-proxy
-      '(:host "proxy" :port 3128))
+;(setq copilot-network-proxy
+;      '(:host "proxy" :port 3128))
 
 ; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
 ; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
