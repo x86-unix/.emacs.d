@@ -3,11 +3,13 @@
 
 ;; Window size
 (setq initial-frame-alist
-  (append (list
-  '(width . 100) ; window width
-  '(height . 55) ; window height
-  )
-  initial-frame-alist))
+  (append
+    (list
+      '(width . 100)  ; window width
+      '(height . 55)  ; window height
+      '(top . 0)      ; window position from the top
+    )
+    initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 
 ;; Depth/length of evaluation result output
@@ -205,8 +207,7 @@
   :config
   (setq recentf-max-saved-items 100) ; Save up to 100 as history
   :bind
-  ("C-c n" . recentf-open-files)
-)
+  ("C-c n" . recentf-open-files))
 
 ;; open-junk-file
 (use-package open-junk-file
@@ -222,14 +223,13 @@
 
 ;; dired-sidebar
 (use-package dired-sidebar
-  :ensure t
   :commands (dired-sidebar-toggle-sidebar)
   :bind (("C-c t" . dired-sidebar-toggle-sidebar))
   :config
-  (setq dired-sidebar-show-hidden-files t))
+  (setq dired-sidebar-show-hidden-files t)
+  (setq dired-sidebar-width 25))
 
 (use-package all-the-icons-dired
-  :ensure t
   :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; company
