@@ -319,7 +319,7 @@
   (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-(setq copilot-node-executable (concat (getenv "HOME") "/usr/bin/node"))
+(setq copilot-node-executable "/data/data/com.termux/files/usr/bin/node")
 ; The following is required in the environment under the proxy Copilot-login is not possible
 ;(setq copilot-network-proxy
 ;      '(:host "proxy" :port 3128))
