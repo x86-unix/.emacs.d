@@ -60,7 +60,10 @@
 ;; font
 (when (eq system-type 'gnu/linux) ; for Linux
   (set-frame-font "Hack")
-  (add-to-list 'default-frame-alist '(font . "Hack-14")))
+  (add-to-list 'default-frame-alist '(font . "Hack-13")))
+(when (eq system-type 'windows-nt) ; for Windows
+  (set-frame-font "BIZ UDゴシック")
+  (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-13")))
 
 ;; bar
 (tool-bar-mode 0)
