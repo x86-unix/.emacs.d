@@ -319,21 +319,7 @@
   (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-; path must be specified when installed with nvm
-(defun get-node-path ()
-  "Find the path to Node.js binary."
-  (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
-         (dirs (directory-files base-dir t "^v.*")))
-    (when dirs
-      (concat (car dirs) "/bin/node"))))
-
-(setq copilot-node-executable
-      (cond
-       ((eq system-type 'windows-nt) "C:\\Program Files\\nodejs\\node.exe")
-       ((eq system-type 'gnu/linux) (get-node-path))
-       ((eq system-type 'darwin) "/usr/local/bin/node")
-       (t "/usr/local/bin/node")))
-
+(setq copilot-node-executable (concat (getenv "HOME") "/usr/bin/node"))
 ; The following is required in the environment under the proxy Copilot-login is not possible
 ;(setq copilot-network-proxy
 ;      '(:host "proxy" :port 3128))
