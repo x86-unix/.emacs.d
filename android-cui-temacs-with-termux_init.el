@@ -1,6 +1,10 @@
 ;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
 
+;; Depth/length of evaluation result output
+(setq eval-expression-print-length nil)
+(setq eval-expression-print-level nil)
+
 ;; initial install packages
 (defvar my-install-package-list
   '(
@@ -74,7 +78,7 @@
 (global-whitespace-mode t)
 
 ;; Toggle behavior of word wrap
-(setq-default truncate-lines t)
+(setq-default truncate-lines nil)
 (defun toggle-truncate-lines ()
   "Toggle truncat lines"
   (interactive)
@@ -147,25 +151,12 @@
       (setq display-line-numbers 'relative)
     )
   ;; Use `global-linum-mode` for versions earlier than 26.1
-  (global-linum-mode)
-)
+  (global-linum-mode))
 
 ;; Theme
-(use-package doom-themes
+(use-package gruvbox-theme
   :config
-  ; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-
-  ; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)  ; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  (load-theme 'gruvbox-dark-hard t))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
@@ -187,8 +178,7 @@
   :config
   (setq recentf-max-saved-items 100) ; Save up to 100 as history
   :bind
-  ("C-c n" . recentf-open-files)
-)
+  ("C-c n" . recentf-open-files))
 
 ;; open-junk-file
 (use-package open-junk-file
@@ -197,12 +187,16 @@
   :bind
   ("C-c j" . open-junk-file))
 
-;; neotree
-(use-package neotree
-  :bind (("C-c t" . neotree-toggle))
+;; dired-sidebar
+(use-package dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)) ; Use icons if graphic display is possible, otherwise use arrows
-  (setq neo-show-hidden-files t)) ; Show hidden files by default
+  (setq dired-sidebar-show-hidden-files t)
+  (setq dired-sidebar-width 25))
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; company
 (use-package company
@@ -323,5 +317,58 @@
 (use-package company-ansible
   :init
   (add-to-list 'company-backends 'company-ansible))
+
+;; for copilot
+; path must be specified when installed with nvm
+(defun get-node-path ()
+  "Find the path to Node.js binary."
+  (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
+         (dirs (directory-files base-dir t "^v.*")))
+    (when dirs
+      (concat (car dirs) "/bin/node"))))
+
+(setq copilot-node-executable
+      (cond
+       ((eq system-type 'windows-nt) "C:\\Program Files\\nodejs\\node.exe")
+       ((eq system-type 'gnu/linux) (get-node-path))
+       ((eq system-type 'darwin) "/usr/local/bin/node")
+       (t "/usr/local/bin/node")))
+
+; The following is required in the environment under the proxy Copilot-login is not possible
+;(setq copilot-network-proxy
+;      '(:host "proxy" :port 3128))
+
+; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
+; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
+; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+(use-package copilot
+  :quelpa
+  (copilot :fetcher github :repo "zerolfx/copilot.el")
+  :config
+  (defun my-tab ()
+    (interactive)
+    (or (copilot-accept-completion)
+        (company-indent-or-complete-common nil)))
+  (global-set-key (kbd "C-TAB") #'my-tab)
+  (global-set-key (kbd "C-<tab>") #'my-tab)
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "C-TAB") #'my-tab)
+    (define-key company-active-map (kbd "C-<tab>") #'my-tab)
+    (define-key company-mode-map (kbd "C-TAB") #'my-tab)
+    (define-key company-mode-map (kbd "C-<tab>") #'my-tab))
+    ; when program mode copilot-mode enabled
+    (add-hook 'prog-mode-hook 'copilot-mode))    
+
+(defun copilot-toggle ()
+  "Toggle the GitHub Copilot on/off."
+  (interactive)
+  (if (bound-and-true-p copilot-mode)
+      (progn
+        (setq copilot-mode nil)
+        (message "GitHub Copilot disabled."))
+    (progn
+      (setq copilot-mode t)
+      (message "GitHub Copilot enabled."))))
+(global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
 ;;;;;;;;; Auto generated
