@@ -218,17 +218,26 @@
   ("C-c j" . open-junk-file))
 
 ;; all-the-icons
-; Required fonts for neotree etc.
 ; need to manually install fonts with M-x all-the-icons-install-fonts
 (use-package all-the-icons
   :if (display-graphic-p))
 
-;; neotree
-(use-package neotree
-  :bind (("C-c t" . neotree-toggle))
+;; treemacs
+(use-package treemacs
+  :bind (("C-c t" . treemacs))
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)) ; Use icons if graphic display is possible, otherwise use arrows
-  (setq neo-show-hidden-files t)) ; Show hidden files by default
+  (setq treemacs-no-png-images t) ; Use text icons instead of PNG images
+  (setq treemacs-show-hidden-files t) ; Show hidden files by default
+  )
+(use-package treemacs-all-the-icons
+  :after treemacs)
+(treemacs-load-theme "all-the-icons")
+(defun toggle-treemacs ()
+  (interactive)
+  (if (eq (treemacs-current-visibility) 'visible)
+      (delete-window (treemacs-get-local-window))
+    (treemacs-select-window)))
+(global-set-key (kbd "C-c t") 'toggle-treemacs)
 
 ;; company
 (use-package company
