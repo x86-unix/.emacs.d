@@ -183,9 +183,9 @@
   (global-linum-mode))
 
 ;; Theme
-(use-package zenburn-theme
+(use-package gruvbox-theme
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'gruvbox-dark-hard t))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
