@@ -102,8 +102,7 @@
    ;(space-mark ?\u0020 [?\xB7])  ; Half-width space shape
    (newline-mark ?\n   [?↓?\n]) ; carriage return shape
    (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
-   )
-)
+   ))
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines nil)
@@ -179,8 +178,7 @@
       (setq display-line-numbers 'relative)
     )
   ;; Use `global-linum-mode` for versions earlier than 26.1
-  (global-linum-mode)
-)
+  (global-linum-mode))
 
 ;; Theme
 (use-package zenburn-theme
@@ -222,25 +220,17 @@
 (use-package all-the-icons
   :if (display-graphic-p))
 
-;; treemacs
-(use-package treemacs
-  :defer t
+;; dired-sidebar
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
   :config
-  (setq treemacs-no-png-images t) ; Use text icons instead of PNG images
-  (setq treemacs-show-hidden-files t) ; Show hidden files by default
-  )
-(use-package treemacs-all-the-icons
-  :after treemacs
-  :config
-  (treemacs-load-theme "all-the-icons"))
+  (setq dired-sidebar-show-hidden-files t))
 
-(defun treemacs-start ()
-  "Start treemacs and bind `C-x t` to `treemacs-select-window`."
-  (interactive)
-  (treemacs)
-  (global-set-key (kbd "C-x t") 'treemacs-select-window))
-
-(add-hook 'emacs-startup-hook 'treemacs-start)
+(use-package all-the-icons-dired
+  :ensure t
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; company
 (use-package company
