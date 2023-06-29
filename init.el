@@ -224,20 +224,23 @@
 
 ;; treemacs
 (use-package treemacs
-  :bind (("C-c t" . treemacs))
+  :defer t
   :config
   (setq treemacs-no-png-images t) ; Use text icons instead of PNG images
   (setq treemacs-show-hidden-files t) ; Show hidden files by default
   )
 (use-package treemacs-all-the-icons
-  :after treemacs)
-(treemacs-load-theme "all-the-icons")
-(defun toggle-treemacs ()
+  :after treemacs
+  :config
+  (treemacs-load-theme "all-the-icons"))
+
+(defun treemacs-start ()
+  "Start treemacs and bind `C-x t` to `treemacs-select-window`."
   (interactive)
-  (if (eq (treemacs-current-visibility) 'visible)
-      (delete-window (treemacs-get-local-window))
-    (treemacs-select-window)))
-(global-set-key (kbd "C-c t") 'toggle-treemacs)
+  (treemacs)
+  (global-set-key (kbd "C-x t") 'treemacs-select-window))
+
+(add-hook 'emacs-startup-hook 'treemacs-start)
 
 ;; company
 (use-package company
