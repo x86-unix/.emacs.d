@@ -106,7 +106,7 @@
 )
 
 ;; Toggle behavior of word wrap
-(setq-default truncate-lines t)
+(setq-default truncate-lines nil)
 (defun toggle-truncate-lines ()
   "Toggle truncat lines"
   (interactive)
