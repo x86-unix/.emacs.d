@@ -317,7 +317,6 @@
 ;; elisp formatter
 (use-package
  elisp-autofmt
- :ensure t
  :commands (elisp-autofmt-mode elisp-autofmt-buffer)
  :hook (emacs-lisp-mode . my/elisp-autofmt-setup))
 
