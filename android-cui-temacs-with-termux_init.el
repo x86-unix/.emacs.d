@@ -260,6 +260,19 @@
 
 (global-set-key (kbd "C-c s") 'shell-in-split-window)
 
+;; elisp formatter
+(use-package
+ elisp-autofmt
+ :commands (elisp-autofmt-mode elisp-autofmt-buffer)
+ :hook (emacs-lisp-mode . my/elisp-autofmt-setup))
+
+(defun my/elisp-autofmt-setup ()
+  (setq-local before-save-hook
+              (lambda ()
+                (elisp-autofmt-buffer)
+                (setq tab-width 2)
+                (setq indent-tabs-mode nil))))
+
 ;; black
 (use-package blacken
   :config
