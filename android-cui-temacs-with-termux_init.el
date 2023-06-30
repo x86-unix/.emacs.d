@@ -77,8 +77,22 @@
 ;; disable beep sound
 (setq visible-bell t)
 
-;; Highlight tabs, double-byte spaces, etc.
-(global-whitespace-mode t)
+;; Highlight whitespace
+(use-package whitespace
+  :ensure t
+  :init
+  (global-whitespace-mode +1)  ; Enable whitespace-mode by default
+  :config
+  (setq whitespace-style '(face spaces space-mark))  ; Only visualize spaces
+
+  ;; Set visualizations
+  (setq whitespace-display-mappings
+        '((space-mark ?\u0020 [?\u0020])  ; visualization of half-width space (no mark, only color)
+          (space-mark ?\u3000 [?\u25A1])))  ; visualization of full-width space
+
+  ;; Set the color for each type of whitespace
+  (set-face-attribute 'whitespace-space nil :background "gray20")  ; Half-width space in lightgray background
+  (set-face-attribute 'whitespace-hspace nil :background "yellow"))  ; Full-width space in yellow background
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines nil)
@@ -260,8 +274,9 @@
 ;; shell-mode
 (defun shell-in-split-window ()
   (interactive)
-  (let* ((window-height-ratio 0.7) ; Specify the desired height ratio (e.g., 0.5 for 50%)
-         (window-height (floor (* window-height-ratio (frame-height)))))
+  (let*
+      ((window-height-ratio 0.7) ; Specify the desired height ratio (e.g., 0.5 for 50%)
+       (window-height (floor (* window-height-ratio (frame-height)))))
     (split-window-below window-height))
   (other-window 1)
   (if (not (get-buffer "*shell*"))
@@ -272,7 +287,8 @@
 
 (defun my/shell-mode-setup ()
   (define-key shell-mode-map (kbd "C-l") 'comint-clear-buffer)
-  (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
+  (define-key
+   shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
   (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
   (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
 
