@@ -260,7 +260,8 @@
 ;; shell-mode
 (defun shell-in-split-window ()
   (interactive)
-  (let ((window-height 10)) ; Specify the desired height value (in lines)
+  (let* ((window-height-ratio 0.7) ; Specify the desired height ratio (e.g., 0.5 for 50%)
+         (window-height (floor (* window-height-ratio (frame-height)))))
     (split-window-below window-height))
   (other-window 1)
   (if (not (get-buffer "*shell*"))
