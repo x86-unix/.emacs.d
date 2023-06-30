@@ -297,22 +297,28 @@
    (electric-pair-mode 1)))
 
 ;; shell-pop
-(use-package
- shell-pop
- :init
- (unless (eq system-type 'windows-nt)
-   (setq shell-pop-shell-type
-         (cond
-          ((eq system-type 'gnu/linux)
-           '("ansi-term"
-             "*ansi-term*"
-             (lambda () (ansi-term "/bin/bash"))))
-          ((eq system-type 'darwin)
-           '("ansi-term"
-             "*ansi-term*"
-             (lambda () (ansi-term "/bin/zsh"))))))
-   (setq shell-pop-full-span t))
- :bind (("C-c s" . shell-pop)))
+(use-package shell-pop
+  :init
+  (unless (eq system-type 'windows-nt)
+    (setq shell-pop-shell-type
+          (cond
+           ((eq system-type 'gnu/linux)
+            '("ansi-term"
+              "*ansi-term*"
+              (lambda () (ansi-term "/bin/bash"))))
+           ((eq system-type 'darwin)
+            '("ansi-term"
+              "*ansi-term*"
+              (lambda () (ansi-term "/bin/zsh"))))))
+    (setq shell-pop-full-span t))
+  :bind (("C-c s" . shell-pop))
+  :config
+  (defun my/shell-mode-setup ()
+    (define-key shell-mode-map (kbd "C-l") 'comint-clear-buffer)
+    (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
+    (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
+    (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
+  (add-hook 'shell-mode-hook 'my/shell-mode-setup))
 
 ;; elisp formatter
 (use-package
