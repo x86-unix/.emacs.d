@@ -260,13 +260,22 @@
 ;; shell-mode
 (defun shell-in-split-window ()
   (interactive)
-  (split-window-below)
+  (let ((window-height 10)) ; Specify the desired height value (in lines)
+    (split-window-below window-height))
   (other-window 1)
   (if (not (get-buffer "*shell*"))
       (progn
         (shell)
         (other-window 1))
     (switch-to-buffer-other-window "*shell*")))
+
+(defun my/shell-mode-setup ()
+  (define-key shell-mode-map (kbd "C-l") 'comint-clear-buffer)
+  (define-key shell-mode-map (kbd "C-r") 'comint-history-isearch-backward)
+  (define-key shell-mode-map (kbd "C-p") 'comint-previous-input)
+  (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
+
+(add-hook 'shell-mode-hook 'my/shell-mode-setup)
 
 (global-set-key (kbd "C-c s") 'shell-in-split-window)
 
