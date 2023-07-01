@@ -215,7 +215,7 @@
  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
  :config
  (setq dired-sidebar-show-hidden-files t)
- (setq dired-sidebar-width 25))
+ (setq dired-sidebar-width 20))
 
 (use-package
  all-the-icons-dired
@@ -275,7 +275,7 @@
 (defun shell-in-split-window ()
   (interactive)
   (let*
-      ((window-height-ratio 0.7) ; Specify the desired height ratio (e.g., 0.5 for 50%)
+      ((window-height-ratio 0.8) ; Specify the desired height ratio (e.g., 0.5 for 50%)
        (window-height (floor (* window-height-ratio (frame-height)))))
     (split-window-below window-height))
   (other-window 1)
