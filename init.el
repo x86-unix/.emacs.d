@@ -6,7 +6,7 @@
       (append
        (list
         '(width . 100) ; window width
-        '(height . 55) ; window height
+        '(height . 50) ; window height
         '(top . 0) ; window position from the top
         )
        initial-frame-alist))
@@ -65,13 +65,13 @@
 ;; font
 (when (eq system-type 'gnu/linux) ; for Linux
   (set-frame-font "Hack")
-  (add-to-list 'default-frame-alist '(font . "Hack-13")))
+  (add-to-list 'default-frame-alist '(font . "Hack-12")))
 (when (eq system-type 'darwin) ; for Mac
   (set-frame-font "Osaka")
-  (add-to-list 'default-frame-alist '(font . "Osaka-13")))
+  (add-to-list 'default-frame-alist '(font . "Osaka-12")))
 (when (eq system-type 'windows-nt) ; for Windows
   (set-frame-font "BIZ UDゴシック")
-  (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-13")))
+  (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12")))
 
 ;; bar
 (tool-bar-mode 0)
@@ -234,7 +234,7 @@
  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
  :config
  (setq dired-sidebar-show-hidden-files t)
- (setq dired-sidebar-width 25))
+ (setq dired-sidebar-width 20))
 
 (use-package
  all-the-icons-dired
@@ -311,7 +311,8 @@
            '("ansi-term"
              "*ansi-term*"
              (lambda () (ansi-term "/bin/zsh"))))))
-   (setq shell-pop-full-span t))
+   (setq shell-pop-full-span t)
+   (setq shell-pop-window-size 20)) ; Specify window size as 30% of screen height
  :bind (("C-c s" . shell-pop))
  :config
  (defun my/shell-mode-setup ()
@@ -455,4 +456,4 @@
       (message "GitHub Copilot enabled."))))
 (global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
-;;;;;;;;; Auto generated 
+;;;;;;;;; Auto generated
