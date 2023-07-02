@@ -17,7 +17,10 @@
 (setq eval-expression-print-level nil)
 
 ;; initial install packages
-(defvar my-install-package-list '(use-package)
+(defvar my-install-package-list '(
+                                  use-package
+                                  ;; Add more packages here...
+                                  )
   "Install Initial Packages")
 
 (require 'package)
@@ -27,8 +30,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/")
              t)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+
 (dolist (pkg my-install-package-list)
   (unless (package-installed-p pkg)
     (package-install pkg)))
