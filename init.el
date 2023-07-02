@@ -36,6 +36,22 @@
   (unless (package-installed-p pkg)
     (package-install pkg)))
 
+;; Update all installed packages
+(defun update-all-packages ()
+  (interactive)
+  (package-refresh-contents)
+  (dolist (package (mapcar 'car package-alist))
+    (let ((latest-version (cadr (assq package package-archive-contents))))
+      (when (and latest-version
+                 (version-list-< (package-desc-version (cadr (assq package package-alist)))
+                                 (package-desc-version latest-version)))
+        (unless (equal package 'gnu-elpa-keyring-update) 
+          (package-install package)
+          (let ((old-package (cadr (assq package package-alist))))
+            (when old-package
+              (package-delete old-package))))))))
+(global-set-key (kbd "C-c u") 'update-all-packages)
+
 ;; Load-Path
 ; Auto add load-path recursively
 (defun add-to-load-path (&rest paths)
