@@ -26,10 +26,10 @@
 (package-initialize)
 
 ;; initial install packages
-(defvar my-install-package-list '(
-                                  use-package
-                                  ;; Add more packages here...
-                                  )
+(defvar my-install-package-list
+  '(use-package
+    ;; Add more packages here...
+    )
   "Install Initial Packages")
 
 (dolist (pkg my-install-package-list)
@@ -41,11 +41,14 @@
   (interactive)
   (package-refresh-contents)
   (dolist (package (mapcar 'car package-alist))
-    (let ((latest-version (cadr (assq package package-archive-contents))))
+    (let ((latest-version
+           (cadr (assq package package-archive-contents))))
       (when (and latest-version
-                 (version-list-< (package-desc-version (cadr (assq package package-alist)))
-                                 (package-desc-version latest-version)))
-        (unless (equal package 'gnu-elpa-keyring-update) 
+                 (version-list-<
+                  (package-desc-version
+                   (cadr (assq package package-alist)))
+                  (package-desc-version latest-version)))
+        (unless (equal package 'gnu-elpa-keyring-update)
           (package-install package)
           (let ((old-package (cadr (assq package package-alist))))
             (when old-package
@@ -64,7 +67,6 @@
             (normal-top-level-add-subdirs-to-load-path))))))
 
 ;; Specify the load path under elpa
-;(add-to-load-path "elpa" "snippets")
 (add-to-load-path "elpa")
 
 ;; use-package 
