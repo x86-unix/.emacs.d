@@ -99,21 +99,23 @@
 (setq visible-bell t)
 
 ;; Highlight whitespace
-(use-package whitespace
-  :ensure t
-  :init
-  (global-whitespace-mode +1)  ; Enable whitespace-mode by default
-  :config
-  (setq whitespace-style '(face spaces space-mark))  ; Only visualize spaces
+(use-package
+ whitespace
+ :ensure t
+ :init
+ (global-whitespace-mode +1) ; Enable whitespace-mode by default
+ :config
+ (setq whitespace-style '(face spaces space-mark)) ; Only visualize spaces
 
-  ;; Set visualizations
-  (setq whitespace-display-mappings
-        '((space-mark ?\u0020 [?\u0020])  ; visualization of half-width space (no mark, only color)
-          (space-mark ?\u3000 [?\u25A1])))  ; visualization of full-width space
+ ;; Set visualizations
+ (setq
+  whitespace-display-mappings
+  '((space-mark ?\u0020 [?\u0020]) ; visualization of half-width space (no mark, only color)
+    (space-mark ?\u3000 [?\u25A1]))) ; visualization of full-width space
 
-  ;; Set the color for each type of whitespace
-  (set-face-attribute 'whitespace-space nil :background "gray20")  ; Half-width space in lightgray background
-  (set-face-attribute 'whitespace-hspace nil :background "yellow"))  ; Full-width space in yellow background
+ ;; Set the color for each type of whitespace
+ (set-face-attribute 'whitespace-space nil :background "gray20") ; Half-width space in lightgray background
+ (set-face-attribute 'whitespace-hspace nil :background "yellow")) ; Full-width space in yellow background
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines nil)
