@@ -5,10 +5,7 @@
 (setq eval-expression-print-length nil)
 (setq eval-expression-print-level nil)
 
-;; initial install packages
-(defvar my-install-package-list '(use-package)
-  "Install Initial Packages")
-
+;; add melpa repos
 (require 'package)
 (add-to-list
  'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -16,11 +13,36 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/")
              t)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+
+;; initial install packages
+(defvar my-install-package-list
+  '(use-package
+    ;; Add more packages here...
+    )
+  "Install Initial Packages")
+
 (dolist (pkg my-install-package-list)
   (unless (package-installed-p pkg)
     (package-install pkg)))
+
+;; Update all installed packages
+(defun update-all-packages ()
+  (interactive)
+  (package-refresh-contents)
+  (dolist (package (mapcar 'car package-alist))
+    (let ((latest-version
+           (cadr (assq package package-archive-contents))))
+      (when (and latest-version
+                 (version-list-<
+                  (package-desc-version
+                   (cadr (assq package package-alist)))
+                  (package-desc-version latest-version)))
+        (unless (equal package 'gnu-elpa-keyring-update)
+          (package-install package)
+          (let ((old-package (cadr (assq package package-alist))))
+            (when old-package
+              (package-delete old-package))))))))
+(global-set-key (kbd "C-c u") 'update-all-packages)
 
 ;; Load-Path
 ; Auto add load-path recursively
@@ -40,7 +62,6 @@
     (setq exec-path (append exec-path (list termuxpath)))))
 
 ;; Specify the load path under elpa
-;(add-to-load-path "elpa" "snippets")
 (add-to-load-path "elpa")
 
 ;; use-package
