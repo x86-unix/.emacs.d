@@ -16,13 +16,7 @@
 (setq eval-expression-print-length nil)
 (setq eval-expression-print-level nil)
 
-;; initial install packages
-(defvar my-install-package-list '(
-                                  use-package
-                                  ;; Add more packages here...
-                                  )
-  "Install Initial Packages")
-
+;; add melpa repos
 (require 'package)
 (add-to-list
  'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -30,6 +24,13 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/")
              t)
 (package-initialize)
+
+;; initial install packages
+(defvar my-install-package-list '(
+                                  use-package
+                                  ;; Add more packages here...
+                                  )
+  "Install Initial Packages")
 
 (dolist (pkg my-install-package-list)
   (unless (package-installed-p pkg)
