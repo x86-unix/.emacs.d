@@ -101,7 +101,6 @@
 ;; Highlight whitespace
 (use-package
  whitespace
- :ensure t
  :init
  (global-whitespace-mode +1) ; Enable whitespace-mode by default
  :config
