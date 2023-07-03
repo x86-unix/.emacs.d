@@ -444,4 +444,4 @@
       (message "GitHub Copilot enabled."))))
 (global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
-;;;;;;;;; Auto generated
+;;;;;;;;; Everything under this point was automatically added by Emacs.
