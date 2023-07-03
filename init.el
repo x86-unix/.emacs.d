@@ -141,7 +141,17 @@
   (recenter))
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
 
-;; Ace-window
+;; ido-mode
+(require 'ido)
+(ido-mode t)
+(global-set-key (kbd "C-x b") 'ido-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+; ido-vertical-mode
+(use-package
+ ido-vertical-mode
+ :init (ido-mode 1) (ido-vertical-mode 1))
+
+;; ace-window
 (use-package ace-window :bind ("C-x o" . ace-window))
 
 ;; Resize Window
@@ -333,7 +343,7 @@
              "*ansi-term*"
              (lambda () (ansi-term "/bin/zsh"))))))
    (setq shell-pop-full-span t)
-   (setq shell-pop-window-size 20)) ; Specify window size as 30% of screen height
+   (setq shell-pop-window-size 20)) ; Specify window size as 20% of screen height
  :bind (("C-c s" . shell-pop))
  :config
  (defun my/shell-mode-setup ()
@@ -455,13 +465,15 @@
    (interactive)
    (or (copilot-accept-completion)
        (company-indent-or-complete-common nil)))
- (global-set-key (kbd "C-TAB") #'my-tab)
- (global-set-key (kbd "C-<tab>") #'my-tab)
+ (defun my-prog-mode-setup ()
+   (local-set-key (kbd "TAB") #'my-tab)
+   (local-set-key (kbd "<tab>") #'my-tab))
+ (add-hook 'prog-mode-hook 'my-prog-mode-setup)
  (with-eval-after-load 'company
-   (define-key company-active-map (kbd "C-TAB") #'my-tab)
-   (define-key company-active-map (kbd "C-<tab>") #'my-tab)
-   (define-key company-mode-map (kbd "C-TAB") #'my-tab)
-   (define-key company-mode-map (kbd "C-<tab>") #'my-tab))
+   (define-key company-active-map (kbd "TAB") #'my-tab)
+   (define-key company-active-map (kbd "<tab>") #'my-tab)
+   (define-key company-mode-map (kbd "TAB") #'my-tab)
+   (define-key company-mode-map (kbd "<tab>") #'my-tab))
  ; when program mode copilot-mode enabled
  (add-hook 'prog-mode-hook 'copilot-mode))
 
@@ -477,4 +489,4 @@
       (message "GitHub Copilot enabled."))))
 (global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
-;;;;;;;;; Auto generated
+;;;;;;;;; Everything under this point was automatically added by Emacs.
