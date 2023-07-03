@@ -5,7 +5,7 @@
 (setq initial-frame-alist
       (append
        (list
-        '(width . 100) ; window width
+        '(width . 180) ; window width
         '(height . 50) ; window height
         '(top . 0) ; window position from the top
         )
@@ -255,7 +255,7 @@
  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
  :config
  (setq dired-sidebar-show-hidden-files t)
- (setq dired-sidebar-width 20))
+ (setq dired-sidebar-width 30))
 
 (use-package
  all-the-icons-dired
