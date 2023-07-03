@@ -127,6 +127,16 @@
   (recenter))
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
 
+;; ido-mode
+(require 'ido)
+(ido-mode t)
+(global-set-key (kbd "C-x b") 'ido-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+; ido-vertical-mode
+(use-package
+ ido-vertical-mode
+ :init (ido-mode 1) (ido-vertical-mode 1))
+
 ;; Ace-window
 (use-package ace-window :bind ("C-x o" . ace-window))
 
@@ -410,8 +420,10 @@
    (interactive)
    (or (copilot-accept-completion)
        (company-indent-or-complete-common nil)))
- (global-set-key (kbd "TAB") #'my-tab)
- (global-set-key (kbd "<tab>") #'my-tab)
+ (defun my-prog-mode-setup ()
+   (local-set-key (kbd "TAB") #'my-tab)
+   (local-set-key (kbd "<tab>") #'my-tab))
+ (add-hook 'prog-mode-hook 'my-prog-mode-setup)
  (with-eval-after-load 'company
    (define-key company-active-map (kbd "TAB") #'my-tab)
    (define-key company-active-map (kbd "<tab>") #'my-tab)
