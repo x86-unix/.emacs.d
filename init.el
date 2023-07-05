@@ -108,8 +108,12 @@
 ;; mode line
 (display-time-mode t)
 
-;; Enable global auto-revert mode
-(global-auto-revert-mode t) 
+;; reloading the file
+(global-set-key (kbd "C-c f")
+                (lambda ()
+                  (interactive)
+                  (revert-buffer :ignore-auto :noconfirm)
+                  (message "file reloaded.")))
 
 ;; reloading the buffer
 (global-set-key (kbd "C-c b") 'revert-buffer)
