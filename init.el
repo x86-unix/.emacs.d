@@ -108,8 +108,11 @@
 ;; mode line
 (display-time-mode t)
 
+;; Enable global auto-revert mode
+(global-auto-revert-mode t) 
+
 ;; reloading the buffer
-(global-set-key (kbd "C-c r") 'revert-buffer)
+(global-set-key (kbd "C-c b") 'revert-buffer)
 
 ;; assign C-h to Backspace
 ; Backspace even in mini buffer
