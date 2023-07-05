@@ -91,6 +91,13 @@
 ;; mode line
 (display-time-mode t)
 
+;; reloading the file
+(global-set-key (kbd "C-c f")
+                (lambda ()
+                  (interactive)
+                  (revert-buffer :ignore-auto :noconfirm)
+                  (message "file reloaded.")))
+
 ;; assign C-h to Backspace
 ; Backspace even in mini buffer
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
