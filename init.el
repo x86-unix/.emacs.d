@@ -108,6 +108,9 @@
 ;; mode line
 (display-time-mode t)
 
+;; reloading the buffer
+(global-set-key (kbd "C-c r") 'revert-buffer)
+
 ;; assign C-h to Backspace
 ; Backspace even in mini buffer
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
