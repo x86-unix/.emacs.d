@@ -135,10 +135,11 @@
       '(face tabs tab-mark spaces space-mark newline newline-mark))
 (setq whitespace-display-mappings
       '((space-mark ?\u3000 [?□]) ; Full-width space shape
-        ;(space-mark ?\u0020 [?\xB7])  ; Half-width space shape
         (newline-mark ?\n [?↓?\n]) ; carriage return shape
         (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
         ))
+; Set the color for each type of whitespace
+(set-face-attribute 'whitespace-space nil :background "gray20") ; Half-width space in lightgray background
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines nil)
