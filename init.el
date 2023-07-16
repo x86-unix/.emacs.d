@@ -234,6 +234,7 @@
 
 ;; Theme
 (use-package gruvbox-theme :config (load-theme 'gruvbox-dark-hard t))
+(set-face-foreground 'font-lock-comment-face "purple")
 
 ;; rainbow-delimiters
 (use-package
