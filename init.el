@@ -385,6 +385,15 @@
 ;; regular expression support
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
+;; go-mode
+; go install golang.org/x/tools/cmd/goimports@latest
+(use-package
+ go-mode
+ :commands go-mode
+ :config
+ (setq gofmt-command "goimports")
+ (add-hook 'before-save-hook 'gofmt-before-save))
+
 ;; for python
 (setq python-indent-offset 4)
 ; Need pip install virtualenv in advance (common to mac,windows,linux)
