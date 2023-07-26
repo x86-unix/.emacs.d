@@ -466,8 +466,8 @@
 ;      '(:host "proxy" :port 3128))
 
 ; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
-; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
-; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+; [for linux/mac] cd /.emacs.d/elpa/copilot-20230605.35923 && ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+; [for win] mklink /D C:\Users\y_ochiai\AppData\Roaming\.emacs.d\elpa\copilot-20230725.104018\dist C:\Users\y_ochiai\AppData\Roaming\.emacs.d\quelpa\build\copilot\dist
 (use-package
  copilot
  :quelpa (copilot :fetcher github :repo "zerolfx/copilot.el")
