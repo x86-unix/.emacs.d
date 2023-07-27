@@ -403,10 +403,24 @@
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
 ;; lsp-mode
-(use-package lsp-mode :commands lsp :hook (python-mode . lsp))
+; npm install -g pyright
+; npm install -g bash-language-server
+; go install golang.org/x/tools/cmd/goimports@latest
+; go install golang.org/x/tools/gopls@latest
+(use-package
+ lsp-mode
+ :commands lsp
+ :hook ((python-mode . lsp) (sh-mode . lsp) (go-mode . lsp)))
+
+;; for Golang
+(use-package
+ go-mode
+ :commands go-mode
+ :config
+ (setq gofmt-command "goimports")
+ (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; for python
-; npm install -g pyright
 (setq python-indent-guess-indent-offset-verbose nil)
 (use-package
  lsp-pyright
