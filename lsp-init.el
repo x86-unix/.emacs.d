@@ -145,11 +145,10 @@
 (global-whitespace-mode t)
 
 (setq whitespace-style
-      '(face tabs tab-mark spaces space-mark newline newline-mark))
+      '(face tabs tab-mark spaces space-mark newline))
 (setq whitespace-display-mappings
       '((space-mark ?\u3000 [?□]) ; Full-width space shape
         (space-mark ?\u0020 [?\xB7]) ; Half-width space shape
-        (newline-mark ?\n [?↓?\n]) ; carriage return shape
         (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
         ))
 
