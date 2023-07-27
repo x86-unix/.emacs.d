@@ -168,6 +168,7 @@
 (ido-mode t)
 (global-set-key (kbd "C-x b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
 ; ido-vertical-mode
 (use-package
  ido-vertical-mode
