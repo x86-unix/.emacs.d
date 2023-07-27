@@ -130,16 +130,16 @@
 (setq visible-bell t)
 
 ;; Highlight tabs, double-byte spaces, etc.
-;(global-whitespace-mode t)
-;
-;(setq whitespace-style
-;      '(face tabs tab-mark spaces space-mark newline newline-mark))
-;(setq whitespace-display-mappings
-;      '((space-mark ?\u3000 [?□]) ; Full-width space shape
-;        (space-mark ?\u0020 [?\xB7]) ; Half-width space shape
-;        (newline-mark ?\n [?↓?\n]) ; carriage return shape
-;        (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
-;        ))
+(global-whitespace-mode t)
+
+(setq whitespace-style
+      '(face tabs tab-mark spaces space-mark newline newline-mark))
+(setq whitespace-display-mappings
+      '((space-mark ?\u3000 [?□]) ; Full-width space shape
+        (space-mark ?\u0020 [?\xB7]) ; Half-width space shape
+        (newline-mark ?\n [?↓?\n]) ; carriage return shape
+        (tab-mark ?\t [?\xBB ?\t] [?\\ ?\t]) ; TAB shape
+        ))
 
 ;; Toggle behavior of word wrap
 (setq-default truncate-lines nil)
@@ -386,21 +386,11 @@
 ;; regular expression support
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
+;; lsp-mode
+(use-package lsp-mode :commands lsp :hook (python-mode . lsp))
+
 ;; for python
 ; npm install -g pyright
-(setq python-indent-offset 4)
-
-;; lsp-modeの設定
-(use-package
- lsp-mode
- :init
- (setq lsp-keymap-prefix "C-c l") ; LSPのキーマッププレフィックスを設定
- :hook
- ((python-mode . lsp) ; PythonモードでLSPを有効にする
-  (lsp-mode . lsp-enable-which-key-integration)) ; which-keyの統合を有効化（任意）
- :commands lsp)
-
-;; lsp-pyrightの設定
 (use-package
  lsp-pyright
  :hook
@@ -409,9 +399,7 @@
   (lambda ()
     (require 'lsp-pyright)
     (lsp)))
- :config
- (setq lsp-pyright-python-executable-cmd "python") ; Pythonの実行コマンドを指定
- )
+ :config (setq lsp-pyright-python-executable-cmd "python"))
 
 ;; Flycheck
 (use-package
@@ -463,8 +451,8 @@
 (setq copilot-network-proxy '(:host "proxy" :port 3128))
 
 ; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
-; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
-; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+; [for linux/mac] cd /.emacs.d/elpa/copilot-20230605.35923 && ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+; [for win] mklink /D C:\Users\y_ochiai\AppData\Roaming\.emacs.d\elpa\copilot-20230725.104018\dist C:\Users\y_ochiai\AppData\Roaming\.emacs.d\quelpa\build\copilot\dist
 (use-package
  copilot
  :quelpa (copilot :fetcher github :repo "zerolfx/copilot.el")
