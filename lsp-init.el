@@ -1,5 +1,15 @@
-;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
+
+;; bar
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+
+;; Display full path of file in title bar
+(setq frame-title-format "%f")
+
+;; no messages
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
 
 ;; Window size
 (setq initial-frame-alist
@@ -10,7 +20,7 @@
         '(top . 0) ; window position from the top
         )
        initial-frame-alist))
-(setq default-frame-alist initial-frame-alist)
+(setq default-frame-alsit initial-frame-alist)
 
 ;; Depth/length of evaluation result output
 (setq eval-expression-print-length nil)
@@ -69,12 +79,25 @@
 ;; Specify the load path under elpa
 (add-to-load-path "elpa")
 
+;; straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                         user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent
+         'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 ;; use-package 
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-;; quelpa-use-package
-(use-package quelpa-use-package)
 
 ;; UTF-8
 (set-language-environment "Japanese")
@@ -93,17 +116,6 @@
 (when (eq system-type 'windows-nt) ; for Windows
   (set-frame-font "BIZ UDゴシック")
   (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12")))
-
-;; bar
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-
-;; Display full path of file in title bar
-(setq frame-title-format "%f")
-
-;; no messages
-(setq inhibit-startup-message t)
-(setq initial-scratch-message "")
 
 ;; mode line
 (display-time-mode t)
@@ -332,6 +344,11 @@
  company-shell
  :config (add-to-list 'company-backends 'company-shell))
 
+;; smartparens 
+(use-package
+ smartparens
+ :config (require 'smartparens-config) (smartparens-global-mode t))
+
 ;; electric-pair
 (use-package
  electric
@@ -391,6 +408,7 @@
 
 ;; for python
 ; npm install -g pyright
+(setq python-indent-guess-indent-offset-verbose nil)
 (use-package
  lsp-pyright
  :hook
@@ -448,14 +466,14 @@
         "/usr/local/bin/node")))
 
 ; The following is required in the environment under the proxy Copilot-login is not possible
-(setq copilot-network-proxy '(:host "proxy" :port 3128))
+;(setq copilot-network-proxy '(:host "proxy" :port 3128))
 
-; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
+; If you install copilot with straight, you can't find agent.js, so symbolic as follows
 ; [for linux/mac] cd /.emacs.d/elpa/copilot-20230605.35923 && ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
-; [for win] mklink /D C:\Users\y_ochiai\AppData\Roaming\.emacs.d\elpa\copilot-20230725.104018\dist C:\Users\y_ochiai\AppData\Roaming\.emacs.d\quelpa\build\copilot\dist
+; [for win] mklink /D C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\build\copilot\dist C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
 (use-package
  copilot
- :quelpa (copilot :fetcher github :repo "zerolfx/copilot.el")
+ :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
  :config
  (defun my-tab ()
    (interactive)
