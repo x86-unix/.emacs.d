@@ -406,26 +406,13 @@
 
 ;; lsp-mode
 ; npm install -g pyright
-; npm i -g @ansible/ansible-language-server
 ; npm install -g bash-language-server
 ; go install golang.org/x/tools/cmd/goimports@latest
 ; go install golang.org/x/tools/gopls@latest
 (use-package
  lsp-mode
  :commands lsp
- :hook
- ((python-mode . lsp)
-  (sh-mode . lsp)
-  (go-mode . lsp)
-  (ansible . lsp)))
-
-;; for Terraform
-(use-package terraform-mode)
-
-;; for Ansible
-(use-package ansible)
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . ansible))
-(add-to-list 'auto-mode-alist '("\\.yaml\\'" . ansible))
+ :hook ((python-mode . lsp) (sh-mode . lsp) (go-mode . lsp)))
 
 ;; for Golang
 (use-package
@@ -463,6 +450,16 @@
           (executable-find "python"))
     (flycheck-mode t))))
 
+;; for Terraform
+(use-package terraform-mode)
+(use-package company-terraform :init (company-terraform-init))
+
+;; for Ansible
+(use-package ansible)
+(use-package
+ company-ansible
+ :init (add-to-list 'company-backends 'company-ansible))
+
 ;; for copilot
 ; path must be specified when installed with nvm
 (defun get-node-path ()
@@ -484,11 +481,11 @@
         "/usr/local/bin/node")))
 
 ; The following is required in the environment under the proxy Copilot-login is not possible
-; (setq copilot-network-proxy '(:host "proxy" :port 3128))
+;(setq copilot-network-proxy '(:host "proxy" :port 3128))
 
 ; If you install copilot with straight, you can't find agent.js, so symbolic as follows
 ; [for linux/mac] cd /.emacs.d/elpa/copilot-20230605.35923 && ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
-; [for win] mklink /D C:\Users\y_ochiai\AppData\Roaming\.emacs.d\straight\build\copilot\dist C:\Users\y_ochiai\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
+; [for win] mklink /D C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\build\copilot\dist C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
 (use-package
  copilot
  :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
