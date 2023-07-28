@@ -220,6 +220,7 @@
 ;; Automatic backup settings
 ; Collect backup files and autosave files into ~/.emacs.d/backups/
 (add-to-list 'backup-directory-alist (cons "." "~/.emacs.d/backups/"))
+(setq auto-save-default nil) ; auto save (#filename#) disabled
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
