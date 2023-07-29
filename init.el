@@ -290,7 +290,7 @@
   :config
   (setq dired-sidebar-show-hidden-files t)
   (setq dired-sidebar-width 20)
-  (if (featurep 'all-the-icons)
+  (if (display-graphic-p)
       (setq dired-sidebar-use-custom-font t)
     (setq dired-sidebar-use-custom-font nil)))
 
@@ -575,6 +575,6 @@
 
       ;; all-the-icons
       ;; need to manually install fonts with M-x all-the-icons-install-fonts
-      (use-package all-the-icons :if (display-graphic-p))))
+      (use-package all-the-icons)))
 
 ;;;;;;;;; Everything under this point was automatically added by Emacs.
