@@ -268,6 +268,13 @@
  :config (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
  :custom (highlight-indent-guides-method 'column))
 
+;; open-junk-file
+(use-package
+ open-junk-file
+ :config
+ (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
+ :bind ("C-c j" . open-junk-file))
+
 ;; dired
 ; recentf-ext
 (use-package
@@ -276,21 +283,16 @@
  (setq recentf-max-saved-items 100) ; Save up to 100 as history
  :bind ("C-c n" . recentf-open-files))
 
-;; open-junk-file
-(use-package
- open-junk-file
- :config
- (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
- :bind ("C-c j" . open-junk-file))
-
 ;; dired-sidebar
-(use-package
- dired-sidebar
- :commands (dired-sidebar-toggle-sidebar)
- :bind (("C-c t" . dired-sidebar-toggle-sidebar))
- :config
- (setq dired-sidebar-show-hidden-files t)
- (setq dired-sidebar-width 20))
+(use-package dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
+  :config
+  (setq dired-sidebar-show-hidden-files t)
+  (setq dired-sidebar-width 20)
+  (if (featurep 'all-the-icons)
+      (setq dired-sidebar-use-custom-font t)
+    (setq dired-sidebar-use-custom-font nil)))
 
 (use-package
  all-the-icons-dired
