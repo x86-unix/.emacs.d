@@ -397,6 +397,7 @@
                 (elisp-autofmt-buffer)
                 (setq tab-width 2)
                 (setq indent-tabs-mode nil))))
+
 ;; black
 (use-package
  blacken
