@@ -293,10 +293,7 @@
   :bind (("C-c t" . dired-sidebar-toggle-sidebar))
   :config
   (setq dired-sidebar-show-hidden-files t)
-  (setq dired-sidebar-width 20)
-  (if (display-graphic-p)
-      (setq dired-sidebar-use-custom-font t)
-    (setq dired-sidebar-use-custom-font nil)))
+  (setq dired-sidebar-width 20))
 
 (use-package
  all-the-icons-dired
