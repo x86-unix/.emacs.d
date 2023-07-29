@@ -461,6 +461,7 @@
  :init (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
+; nvm install node
 ; path must be specified when installed with nvm
 (defun get-node-path ()
   "Find the path to Node.js binary."
@@ -484,8 +485,8 @@
 ;(setq copilot-network-proxy '(:host "proxy" :port 3128))
 
 ; If you install copilot with straight, you can't find agent.js, so symbolic as follows
-; [for linux/mac] cd /.emacs.d/elpa/copilot-20230605.35923 && ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
-; [for win] mklink /D C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\build\copilot\dist C:\Users\MINIS\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
+; [for linux/mac] cd ~/.emacs.d/straight/build/copilot/ && ln -s ~/.emacs.d/straight/repos/copilot.el/dist
+; [for win] mklink /D %USERPROFILE%\AppData\Roaming\.emacs.d\straight\build\copilot\dist %USERPROFILE%\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
 (use-package
  copilot
  :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
