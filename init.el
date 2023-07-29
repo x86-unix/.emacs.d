@@ -3,7 +3,8 @@
 (setq tramp-connection-timeout 5)
 
 ;; bar
-(tool-bar-mode 0)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; Display full path of file in title bar
 (setq frame-title-format "%f")
