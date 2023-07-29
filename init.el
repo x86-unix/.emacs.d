@@ -490,6 +490,7 @@
 (if (not (display-graphic-p))
     (progn
       ;; Add settings for CLI (terminal) mode here
+     
       ;; shell-mode
       (defun shell-in-split-window ()
         (interactive)
@@ -520,6 +521,7 @@
 (if (display-graphic-p)
     (progn
       ;; Add settings for GUI mode here
+     
       ;; shell-pop
       (use-package
        shell-pop
@@ -547,10 +549,13 @@
           shell-mode-map (kbd "C-p") 'comint-previous-input)
          (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
        (add-hook 'shell-mode-hook 'my/shell-mode-setup))
+     
       ;; bar
       (scroll-bar-mode 0)
+     
       ;; on mouse yank
       (setq mouse-drag-copy-region t)
+     
       ;; Window size
       (setq initial-frame-alist
             (append
@@ -561,6 +566,7 @@
               )
              initial-frame-alist))
       (setq default-frame-alist initial-frame-alist)
+     
       ;; all-the-icons
       ;; need to manually install fonts with M-x all-the-icons-install-fonts
       (use-package all-the-icons :if (display-graphic-p))))
