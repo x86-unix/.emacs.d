@@ -1,6 +1,15 @@
 ;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
 
+;; bar
+(tool-bar-mode 0)
+
+;; Display full path of file in title bar
+(setq frame-title-format "%f")
+
+;; no messages
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
 ;; Depth/length of evaluation result output
 (setq eval-expression-print-length nil)
 (setq eval-expression-print-level nil)
@@ -64,12 +73,25 @@
 ;; Specify the load path under elpa
 (add-to-load-path "elpa")
 
+;; straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                         user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent
+         'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
 ;; use-package
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-;; quelpa-use-package
-(use-package quelpa-use-package)
 
 ;; UTF-8
 (set-language-environment "Japanese")
@@ -78,25 +100,33 @@
 (set-keyboard-coding-system 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
 
-;; bar
-(tool-bar-mode 0)
-
-;; Display full path of file in title bar
-(setq frame-title-format "%f")
-
-;; no messages
-(setq inhibit-startup-message t)
-(setq initial-scratch-message "")
+;; font
+(when (eq system-type 'gnu/linux) ; for Linux
+  (set-frame-font "Hack")
+  (add-to-list 'default-frame-alist '(font . "Hack-12")))
+(when (eq system-type 'darwin) ; for Mac
+  (set-frame-font "Osaka")
+  (add-to-list 'default-frame-alist '(font . "Osaka-12")))
+(when (eq system-type 'windows-nt) ; for Windows
+  (set-frame-font "BIZ UDゴシック")
+  (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12")))
+(when (eq system-type 'android) ; for Android
+  ;; do nothing
+  )
 
 ;; mode line
 (display-time-mode t)
 
 ;; reloading the file
-(global-set-key (kbd "C-c f")
-                (lambda ()
-                  (interactive)
-                  (revert-buffer :ignore-auto :noconfirm)
-                  (message "file reloaded.")))
+(global-set-key
+ (kbd "C-c f")
+ (lambda ()
+   (interactive)
+   (revert-buffer :ignore-auto :noconfirm)
+   (message "file reloaded.")))
+
+;; reloading the buffer
+(global-set-key (kbd "C-c b") 'revert-buffer)
 
 ;; assign C-h to Backspace
 ; Backspace even in mini buffer
@@ -139,12 +169,13 @@
 (ido-mode t)
 (global-set-key (kbd "C-x b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
 ; ido-vertical-mode
 (use-package
  ido-vertical-mode
  :init (ido-mode 1) (ido-vertical-mode 1))
 
-;; Ace-window
+;; ace-window
 (use-package ace-window :bind ("C-x o" . ace-window))
 
 ;; Resize Window
@@ -190,6 +221,7 @@
 ;; Automatic backup settings
 ; Collect backup files and autosave files into ~/.emacs.d/backups/
 (add-to-list 'backup-directory-alist (cons "." "~/.emacs.d/backups/"))
+(setq auto-save-default nil) ; auto save (#filename#) disabled
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backups/") t)))
 
@@ -304,6 +336,11 @@
  company-shell
  :config (add-to-list 'company-backends 'company-shell))
 
+;; smartparens 
+(use-package
+ smartparens
+ :config (require 'smartparens-config) (smartparens-global-mode t))
+
 ;; electric-pair
 (use-package
  electric
@@ -336,7 +373,7 @@
 
 (global-set-key (kbd "C-c s") 'shell-in-split-window)
 
-;; elisp-autofmt
+;; elisp formatter
 (use-package
  elisp-autofmt
  :commands (elisp-autofmt-mode elisp-autofmt-buffer)
@@ -357,8 +394,17 @@
 ;; regular expression support
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
-;; go-mode
+;; lsp-mode
+; npm install -g pyright
+; npm install -g bash-language-server
 ; go install golang.org/x/tools/cmd/goimports@latest
+; go install golang.org/x/tools/gopls@latest
+(use-package
+ lsp-mode
+ :commands lsp
+ :hook ((python-mode . lsp) (sh-mode . lsp) (go-mode . lsp)))
+
+;; for Golang
 (use-package
  go-mode
  :commands go-mode
@@ -367,34 +413,16 @@
  (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; for python
-; Need pip install virtualenv in advance (common to mac,windows,linux)
-(setq python-indent-offset 4)
-; company-jedi
-(defun my/install-jedi-server-if-needed ()
-  "Check if jedi server is installed. If not, install it."
-  (let*
-      ((default-dir
-        (cond
-         ((eq system-type 'windows-nt)
-          (concat
-           (getenv "USERPROFILE")
-           "/AppData/Roaming/.emacs.d/.python-environments/default"))
-         ((eq system-type 'darwin)
-          "~/.emacs.d/.python-environments/default/")
-         (t
-          "~/.emacs.d/.python-environments/default/")))
-       (jedi-dir (expand-file-name default-dir)))
-    (unless (file-exists-p jedi-dir)
-      (jedi:install-server))))
-
+(setq python-indent-guess-indent-offset-verbose nil)
 (use-package
- company-jedi
- :commands company-jedi
- :init (my/install-jedi-server-if-needed)
- (defun use-package-company-add-company-jedi ()
-   (unless (member 'company-jedi company-backends)
-     (add-to-list 'company-backends 'company-jedi)))
- (add-hook 'python-mode-hook 'use-package-company-add-company-jedi))
+ lsp-pyright
+ :hook
+ (python-mode
+  .
+  (lambda ()
+    (require 'lsp-pyright)
+    (lsp)))
+ :config (setq lsp-pyright-python-executable-cmd "python"))
 
 ;; Flycheck
 (use-package
@@ -423,15 +451,36 @@
  :init (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-(setq copilot-node-executable
-      "/data/data/com.termux/files/usr/bin/node")
+; nvm install node
+; path must be specified when installed with nvm
+(defun get-node-path ()
+  "Find the path to Node.js binary."
+  (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
+         (dirs (directory-files base-dir t "^v.*")))
+    (when dirs
+      (concat (car dirs) "/bin/node"))))
 
-; If you install copilot with quelpa, you can't find agent.js, so symbolic as follows
-; cd  /.emacs.d/elpa/copilot-20230605.35923 && \
-; ln -s /home/vagrant/.emacs.d/quelpa/build/copilot/dist
+(setq copilot-node-executable
+      (cond
+       ((eq system-type 'windows-nt)
+        "C:\\Program Files\\nodejs\\node.exe")
+       ((eq system-type 'gnu/linux)
+        (get-node-path))
+       ((eq system-type 'darwin)
+        "/usr/local/bin/node")
+       ((eq system-type 'android)
+        "/data/data/com.termux/files/usr/bin/node")
+       (t
+        "/usr/local/bin/node")))
+
+; The following is required in the environment under the proxy Copilot-login is not possible
+;(setq copilot-network-proxy '(:host "proxy" :port 3128))
+; If you install copilot with straight, you can't find agent.js, so symbolic as follows
+; [for linux/mac] cd ~/.emacs.d/straight/build/copilot/ && ln -s ~/.emacs.d/straight/repos/copilot.el/dist
+; [for win] mklink /D %USERPROFILE%\AppData\Roaming\.emacs.d\straight\build\copilot\dist %USERPROFILE%\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
 (use-package
  copilot
- :quelpa (copilot :fetcher github :repo "zerolfx/copilot.el")
+ :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
  :config
  (defun my-tab ()
    (interactive)
