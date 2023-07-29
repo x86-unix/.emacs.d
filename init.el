@@ -275,6 +275,10 @@
  (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
  :bind ("C-c j" . open-junk-file))
 
+;; all-the-icons
+; need to manually install fonts with M-x all-the-icons-install-fonts
+(use-package all-the-icons)
+
 ;; dired
 ; recentf-ext
 (use-package
@@ -571,10 +575,6 @@
               '(top . 0) ; window position from the top
               )
              initial-frame-alist))
-      (setq default-frame-alist initial-frame-alist)
-
-      ;; all-the-icons
-      ;; need to manually install fonts with M-x all-the-icons-install-fonts
-      (use-package all-the-icons)))
+      (setq default-frame-alist initial-frame-alist)))
 
 ;;;;;;;;; Everything under this point was automatically added by Emacs.
