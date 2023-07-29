@@ -1,3 +1,4 @@
+;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
 
 ;; bar
