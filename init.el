@@ -288,12 +288,13 @@
  :bind ("C-c n" . recentf-open-files))
 
 ;; dired-sidebar
-(use-package dired-sidebar
-  :commands (dired-sidebar-toggle-sidebar)
-  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
-  :config
-  (setq dired-sidebar-show-hidden-files t)
-  (setq dired-sidebar-width 20))
+(use-package
+ dired-sidebar
+ :commands (dired-sidebar-toggle-sidebar)
+ :bind (("C-c t" . dired-sidebar-toggle-sidebar))
+ :config
+ (setq dired-sidebar-show-hidden-files t)
+ (setq dired-sidebar-width 20))
 
 (use-package
  all-the-icons-dired
@@ -402,13 +403,14 @@
 (defun get-go-install-path ()
   "Find the path to golang binary."
   (concat (getenv "HOME") "/.goenv/shims"))
-(use-package go-mode
-  :commands go-mode
-  :config
-  (add-to-list 'exec-path (get-go-path))
-  (add-to-list 'exec-path (get-go-install-path))
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save))
+(use-package
+ go-mode
+ :commands go-mode
+ :config
+ (add-to-list 'exec-path (get-go-path))
+ (add-to-list 'exec-path (get-go-install-path))
+ (setq gofmt-command "goimports")
+ (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; for python
 (setq python-indent-guess-indent-offset-verbose nil)
@@ -461,7 +463,13 @@
 (let ((node-path (get-node-path))
       (pyenv-path (concat (getenv "HOME") "/.pyenv/shims/")))
   (when node-path
-    (setenv "PATH" (concat node-path path-separator pyenv-path path-separator (getenv "PATH"))))
+    (setenv "PATH"
+            (concat
+             node-path
+             path-separator
+             pyenv-path
+             path-separator
+             (getenv "PATH"))))
   (add-to-list 'exec-path node-path)
   (add-to-list 'exec-path pyenv-path))
 
@@ -470,7 +478,7 @@
        ((eq system-type 'windows-nt)
         "C:\\Program Files\\nodejs\\node.exe")
        ((eq system-type 'gnu/linux)
-        (get-node-path))
+        (concat (get-node-path) "/node"))
        ((eq system-type 'darwin)
         "/usr/local/bin/node")
        ((eq system-type 'android)
