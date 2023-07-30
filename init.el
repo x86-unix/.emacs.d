@@ -450,7 +450,14 @@
   (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
          (dirs (directory-files base-dir t "^v.*")))
     (when dirs
-      (concat (car dirs) "/bin/node"))))
+      (concat (car dirs) "/bin"))))
+
+(let ((node-path (get-node-path))
+      (pyenv-path (concat (getenv "HOME") "/.pyenv/shims/")))
+  (when node-path
+    (setenv "PATH" (concat node-path path-separator pyenv-path path-separator (getenv "PATH"))))
+  (add-to-list 'exec-path node-path)
+  (add-to-list 'exec-path pyenv-path))
 
 (setq copilot-node-executable
       (cond
