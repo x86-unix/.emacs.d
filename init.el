@@ -455,7 +455,7 @@
         "/usr/local/bin/node")))
 
 ; The following is required in the environment under the proxy Copilot-login is not possible
-;(setq copilot-network-proxy '(:host "proxy" :port 3128))
+; (setq copilot-network-proxy '(:host "proxy" :port 3128))
 ; If you install copilot with straight, you can't find agent.js, so symbolic as follows
 ; [for linux/mac] cd ~/.emacs.d/straight/build/copilot/ && ln -s ~/.emacs.d/straight/repos/copilot.el/dist
 ; [for win] mklink /D %USERPROFILE%\AppData\Roaming\.emacs.d\straight\build\copilot\dist %USERPROFILE%\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
