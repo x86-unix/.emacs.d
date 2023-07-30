@@ -325,6 +325,12 @@
   ("C-n" . company-select-next)
   ("C-p" . company-select-previous)))
 
+;; company-quickhelp
+(use-package
+ company-quickhelp
+ :after company
+ :config (company-quickhelp-mode t))
+
 ;; disable-company-mode lists
 (defvar my-disable-company-modes '(shell-mode eshell-mode term-mode))
 (defun my-disable-company-in-selected-modes ()
