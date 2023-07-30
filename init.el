@@ -1,3 +1,41 @@
+;;; ---------- Setting up the OS ---------- ;;;
+;; install build tools 
+; 1. apt update; apt install build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+;; pyenv (e.g., in Debian)
+; 1. git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+; 2. cd ~/.pyenv && src/configure && make -C src
+; 3. echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+;    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+;    echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+; 4. pyenv install --list
+; 5. pyenv install 3.xx.x
+; 6. pyenv global 3.xx.x
+; 7. python -V
+
+;; nvm (e.g., in Debian)
+; 1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+; 2. source ~/.bashrc
+; 3. nvm install --lts 
+; 4. nvm use --lts
+; 5. node -v
+; 6. nvm install-latest-npm
+; 7. npm -v
+; 8. npm install -g pyright
+; 9. npm install -g bash-language-server
+;10. npm list -g
+
+;; goenv (e.g., in Debian)
+; 1. git clone https://github.com/syndbg/goenv.git ~/.goenv
+; 2. echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
+;    echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
+;    echo 'eval "$(goenv init -)"' >> ~/.bashrc
+; 3. goenv install latest
+; 4. goenv global latest
+; 5. go version
+; 6. go install golang.org/x/tools/cmd/goimports@latest
+; 7. go install golang.org/x/tools/gopls@latest
+
 ;;; ---------- Common Settings ---------- ;;;
 ;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
@@ -383,10 +421,6 @@
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
 ;; lsp-mode
-; npm install -g pyright
-; npm install -g bash-language-server
-; go install golang.org/x/tools/cmd/goimports@latest
-; go install golang.org/x/tools/gopls@latest
 (use-package
  lsp-mode
  :commands lsp
@@ -451,7 +485,6 @@
  :init (add-to-list 'company-backends 'company-ansible))
 
 ;; for copilot
-; nvm install node
 ; path must be specified when installed with nvm
 (defun get-node-path ()
   "Find the path to Node.js binary."
