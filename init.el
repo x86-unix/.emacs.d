@@ -33,11 +33,14 @@
 ; 2. echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
 ;    echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
 ;    echo 'eval "$(goenv init -)"' >> ~/.bashrc
-; 3. goenv install latest
-; 4. goenv global latest
-; 5. go version
-; 6. go install golang.org/x/tools/cmd/goimports@latest
-; 7. go install golang.org/x/tools/gopls@latest
+; 3. source ~/.bashrc
+; 4. goenv -v
+; 5. goenv install latest
+; 6. goenv versions
+; 7. goenv global 1.20.6
+; 8. go version
+; 9. go install golang.org/x/tools/cmd/goimports@latest
+;10. go install golang.org/x/tools/gopls@latest
 
 ;;; ---------- Common Settings ---------- ;;;
 ;; Tramp fail timeout
