@@ -386,12 +386,23 @@
  :hook ((python-mode . lsp) (sh-mode . lsp) (go-mode . lsp)))
 
 ;; for Golang
-(use-package
- go-mode
- :commands go-mode
- :config
- (setq gofmt-command "goimports")
- (add-hook 'before-save-hook 'gofmt-before-save))
+(defun get-go-path ()
+  "Find the path to golang binary."
+  (let* ((base-dir (concat (getenv "HOME") "/.goenv/versions/"))
+         (dirs (directory-files base-dir t "^[^.].*"))
+         (sorted-dirs (sort dirs #'file-newer-than-file-p)))
+    (when sorted-dirs
+      (concat (car sorted-dirs) "/bin/go"))))
+(defun get-go-install-path ()
+  "Find the path to golang binary."
+  (concat (getenv "HOME") "/.goenv/shims"))
+(use-package go-mode
+  :commands go-mode
+  :config
+  (add-to-list 'exec-path (get-go-path))
+  (add-to-list 'exec-path (get-go-install-path))
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; for python
 (setq python-indent-guess-indent-offset-verbose nil)
