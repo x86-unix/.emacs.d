@@ -531,6 +531,7 @@
 ; If you install copilot with straight, you can't find agent.js, so symbolic as follows
 ; [for linux/mac] cd ~/.emacs.d/straight/build/copilot/ && ln -s ~/.emacs.d/straight/repos/copilot.el/dist
 ; [for win] mklink /D %USERPROFILE%\AppData\Roaming\.emacs.d\straight\build\copilot\dist %USERPROFILE%\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
+; To authenticate using `M-x copilot-login`, access the following URL in a separate browser: "https://github.com/login/device" if you are using a terminal.
 (use-package
  copilot
  :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
