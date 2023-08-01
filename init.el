@@ -427,6 +427,9 @@
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
 ;; lsp-mode
+; If you are experiencing slow performance with lsp-mode, it might be due to scanning all files under the workspace directory. 
+: If you mistakenly added unnecessary directories, you can rectify it by running "M-x lsp-workspace-folders-remove" and removing the target directories from the workspace. 
+: This will help improve the processing speed by excluding unwanted files from LSP analysis.
 (use-package
  lsp-mode
  :commands lsp
