@@ -46,6 +46,9 @@
 ;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
 
+;; shut up, emacs!
+(setq display-warning-minimum-level :error)
+
 ;; bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
