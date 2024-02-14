@@ -575,7 +575,6 @@
 (if (not (display-graphic-p))
     (progn
       ;; Add settings for CLI (terminal) mode here
-
       ;; shell-mode
       (defun shell-in-split-window ()
         (interactive)
