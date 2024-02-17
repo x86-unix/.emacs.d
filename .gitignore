@@ -1,6 +1,11 @@
-/*
-!/init.el
-!/.gitignore
-!/old/
-/old/*
-!/old/
+# 以下のディレクトリとその中身を無視
+/auto-save-list/*
+/backups/*
+/elisp-autofmt-cache/*
+/eln-cache/*
+/elpa/*
+/recentf/*
+/straight/*
+
+# 以下のファイルを無視
+/ido.last
