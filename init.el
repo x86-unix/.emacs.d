@@ -418,7 +418,7 @@
 ;; eglot(lsp)
 (use-package eglot
   :hook ((python-mode . eglot-ensure)
-         (sh-mode . eglot-ensure))
+         (sh-mode . eglot-ensure)))
 
 ;; for python
 (setq python-indent-guess-indent-offset-verbose nil)
