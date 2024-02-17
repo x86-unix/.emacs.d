@@ -28,6 +28,20 @@
 ; 9. npm install -g bash-language-server
 ;10. npm list -g
 
+;; goenv (e.g., in Debian)
+; 1. git clone https://github.com/syndbg/goenv.git ~/.goenv
+; 2. echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc
+;    echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc
+;    echo 'eval "$(goenv init -)"' >> ~/.bashrc
+; 3. source ~/.bashrc
+; 4. goenv -v
+; 5. goenv install latest
+; 6. goenv versions
+; 7. goenv global 1.20.6
+; 8. go version
+; 9. go install golang.org/x/tools/cmd/goimports@latest
+;10. go install golang.org/x/tools/gopls@latest
+
 ;;; ---------- Common Settings ---------- ;;;
 ;; Tramp fail timeout
 (setq tramp-connection-timeout 5)
@@ -418,7 +432,28 @@
 ;; eglot(lsp)
 (use-package eglot
   :hook ((python-mode . eglot-ensure)
-         (sh-mode . eglot-ensure))
+         (sh-mode . eglot-ensure)
+         (go-mode . eglot-ensure)))
+
+;; for Golang
+(defun get-go-path ()
+  "Find the path to golang binary."
+  (let* ((base-dir (concat (getenv "HOME") "/.goenv/versions/"))
+         (dirs (directory-files base-dir t "^[^.].*"))
+         (sorted-dirs (sort dirs #'file-newer-than-file-p)))
+    (when sorted-dirs
+      (concat (car sorted-dirs) "/bin/go"))))
+(defun get-go-install-path ()
+  "Find the path to golang binary."
+  (concat (getenv "HOME") "/.goenv/shims"))
+(use-package
+ go-mode
+ :commands go-mode
+ :config
+ (add-to-list 'exec-path (get-go-path))
+ (add-to-list 'exec-path (get-go-install-path))
+ (setq gofmt-command "goimports")
+ (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; for python
 (setq python-indent-guess-indent-offset-verbose nil)
