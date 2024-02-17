@@ -1,6 +1,7 @@
 # 以下のディレクトリとその中身を無視
 /auto-save-list/*
 /backups/*
+/.cache/*
 /elisp-autofmt-cache/*
 /eln-cache/*
 /elpa/*
@@ -9,3 +10,4 @@
 
 # 以下のファイルを無視
 /ido.last
+/recentf
