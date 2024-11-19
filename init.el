@@ -17,7 +17,7 @@
 ; 9. python -V
 
 ;; nvm (e.g., in Debian)
-; 1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+; 1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 ; 2. source ~/.bashrc
 ; 3. nvm install --lts 
 ; 4. nvm use --lts
