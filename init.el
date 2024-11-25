@@ -377,11 +377,6 @@
     'my-disable-company-in-selected-modes))
  my-disable-company-modes)
 
-;; company-shell
-(use-package
- company-shell
- :config (add-to-list 'company-backends 'company-shell))
-
 ;; smartparens 
 (use-package
  smartparens
@@ -415,23 +410,6 @@
 ;; regular expression support
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
-;; eglot(lsp)
-(use-package eglot
-  :hook ((python-mode . eglot-ensure)
-         (sh-mode . eglot-ensure)))
-
-;; for python
-(setq python-indent-guess-indent-offset-verbose nil)
-(use-package
- lsp-pyright
- :hook
- (python-mode
-  .
-  (lambda ()
-    (require 'lsp-pyright)
-    (lsp)))
- :config (setq lsp-pyright-python-executable-cmd "python"))
-
 ;; Flycheck
 (use-package
  flycheck
@@ -457,80 +435,6 @@
 (use-package
  company-ansible
  :init (add-to-list 'company-backends 'company-ansible))
-
-;; for copilot
-; path must be specified when installed with nvm
-(defun get-node-path ()
-  "Find the path to Node.js binary."
-  (let* ((base-dir (concat (getenv "HOME") "/.nvm/versions/node/"))
-         (dirs (directory-files base-dir t "^v.*")))
-    (when dirs
-      (concat (car dirs) "/bin"))))
-
-(when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
-  (let ((node-path (get-node-path))
-        (pyenv-path (concat (getenv "HOME") "/.pyenv/shims/")))
-    (when node-path
-      (setenv "PATH"
-              (concat
-               node-path
-               path-separator
-               pyenv-path
-               path-separator
-               (getenv "PATH"))))
-    (add-to-list 'exec-path node-path)
-    (add-to-list 'exec-path pyenv-path)))
-
-(setq copilot-node-executable
-      (cond
-       ((eq system-type 'windows-nt)
-        "C:\\Program Files\\nodejs\\node.exe")
-       ((eq system-type 'gnu/linux)
-        (concat (get-node-path) "/node"))
-       ((eq system-type 'darwin)
-        "/usr/local/bin/node")
-       ((eq system-type 'android)
-        "/data/data/com.termux/files/usr/bin/node")
-       (t
-        "/usr/local/bin/node")))
-
-; The following is required in the environment under the proxy Copilot-login is not possible
-; (setq copilot-network-proxy '(:host "proxy" :port 3128))
-; If you install copilot with straight, you can't find agent.js, so symbolic as follows
-; [for linux/mac] cd ~/.emacs.d/straight/build/copilot/ && ln -s ~/.emacs.d/straight/repos/copilot.el/dist
-; [for win] mklink /D %USERPROFILE%\AppData\Roaming\.emacs.d\straight\build\copilot\dist %USERPROFILE%\AppData\Roaming\.emacs.d\straight\repos\copilot.el\dist
-; To authenticate using `M-x copilot-login`, access the following URL in a separate browser: "https://github.com/login/device" if you are using a terminal.
-(use-package
- copilot
- :straight (copilot :type git :host github :repo "zerolfx/copilot.el")
- :config
- (defun my-tab ()
-   (interactive)
-   (or (copilot-accept-completion)
-       (company-indent-or-complete-common nil)))
- (defun my-prog-mode-setup ()
-   (local-set-key (kbd "TAB") #'my-tab)
-   (local-set-key (kbd "<tab>") #'my-tab))
- (add-hook 'prog-mode-hook 'my-prog-mode-setup)
- (with-eval-after-load 'company
-   (define-key company-active-map (kbd "TAB") #'my-tab)
-   (define-key company-active-map (kbd "<tab>") #'my-tab)
-   (define-key company-mode-map (kbd "TAB") #'my-tab)
-   (define-key company-mode-map (kbd "<tab>") #'my-tab))
- ; when program mode copilot-mode enabled
- (add-hook 'prog-mode-hook 'copilot-mode))
-
-(defun copilot-toggle ()
-  "Toggle the GitHub Copilot on/off."
-  (interactive)
-  (if (bound-and-true-p copilot-mode)
-      (progn
-        (setq copilot-mode nil)
-        (message "GitHub Copilot disabled."))
-    (progn
-      (setq copilot-mode t)
-      (message "GitHub Copilot enabled."))))
-(global-set-key (kbd "C-c c") 'copilot-toggle) ; C-c c copilot on/off
 
 ;;; ---------- CLI Settings ---------- ;;;
 ;; for CLI Emacs only
@@ -613,5 +517,3 @@
               )
              initial-frame-alist))
       (setq default-frame-alist initial-frame-alist)))
-
-;;;;;;;;; Everything under this point was automatically added by Emacs.
