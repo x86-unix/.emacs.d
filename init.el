@@ -24,9 +24,6 @@
 ; 5. node -v
 ; 6. nvm install-latest-npm
 ; 7. npm -v
-; 8. npm install -g pyright
-; 9. npm install -g bash-language-server
-;10. npm list -g
 
 ;;; ---------- Common Settings ---------- ;;;
 ;; Tramp fail timeout
