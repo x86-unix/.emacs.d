@@ -4,7 +4,7 @@
 ; 2. apt install fonts-hack
 
 ;; pyenv (e.g., in Debian)
-; 1. git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+; 1. git clone  ~/.pyenv
 ; 2. cd ~/.pyenv && src/configure && make -C src
 ; 3. echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 ;    echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
@@ -17,7 +17,7 @@
 ; 9. python -V
 
 ;; nvm (e.g., in Debian)
-; 1. curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+; 1. curl -o-  | bash
 ; 2. source ~/.bashrc
 ; 3. nvm install --lts 
 ; 4. nvm use --lts
@@ -59,6 +59,7 @@
 ;; initial install packages
 (defvar my-install-package-list
   '(use-package
+    markdown-mode   ; Markdown mode
     ;; Add more packages here...
     )
   "Install Initial Packages")
@@ -210,6 +211,13 @@
 
 ;; ace-window
 (use-package ace-window :bind ("C-x o" . ace-window))
+
+;; Markdown settings
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . markdown-mode)
+  :config
+  (setq markdown-command "pandoc"))
 
 ;; Resize Window
 (defun window-resizer ()
@@ -514,3 +522,4 @@
               )
              initial-frame-alist))
       (setq default-frame-alist initial-frame-alist)))
+
