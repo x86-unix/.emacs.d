@@ -406,11 +406,6 @@
                 (setq tab-width 2)
                 (setq indent-tabs-mode nil))))
 
-;; black
-(use-package
- blacken
- :config (add-hook 'python-mode-hook 'blacken-mode))
-
 ;; regular expression support
 (use-package regex-tool :bind (("C-c r" . regex-tool)))
 
