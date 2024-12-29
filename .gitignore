@@ -8,6 +8,8 @@
 /recentf/*
 /straight/*
 /eshell/*
+/junk/*
+/org-persist/*
 
 # 以下のファイルを無視
 /ido.last
