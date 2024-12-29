@@ -32,16 +32,14 @@
 (use-package nerd-icons
   :ensure t
   :config
-  ;; フォントファイルが存在しない場合にのみインストール
-  (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
+  (unless (file-exists-p "~/NFM.ttf")
     (nerd-icons-install-fonts)))
 ; dired-sidebarの設定
 (use-package dired-sidebar
   :ensure t
   :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
   :config
-  (setq dired-sidebar-theme 'nerd-icons)  ;; テーマをnerd-iconsに設定
-  (add-hook 'dired-sidebar-mode-hook 'dired-sidebar-refresh))
+  (setq dired-sidebar-theme 'nerd-icons))
 ; nerd-icons-diredの設定
 (use-package nerd-icons-dired
   :ensure t
