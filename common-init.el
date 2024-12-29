@@ -38,7 +38,7 @@
 ; dired-sidebarの設定
 (use-package dired-sidebar
   :ensure t
-  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
   :config
   (setq dired-sidebar-theme 'nerd-icons))
 ; nerd-icons-diredの設定
@@ -54,6 +54,7 @@
 (global-display-line-numbers-mode) ; 行番号表示
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil) ; スペースでインデント
+(display-time-mode t)
 
 ;; バックアップ設定
 (setq make-backup-files nil)       ; バックアップファイルを無効化
