@@ -36,31 +36,18 @@
 (global-display-line-numbers-mode) ; 行番号表示
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil) ; スペースでインデント
-; all-the-icons
-; フォントが必要なので、初回セットアップ時に M-x all-the-icons-install-fonts を実行
-(defvar my/all-the-icons-font-dir "~/.local/share/fonts/"
-  "Directory where all-the-icons fonts will be installed.")
-
-(defvar my/all-the-icons-installed-p nil
-  "Flag indicating whether all-the-icons fonts have been installed.")
-
-; dired-sidebar
+; dired-sidebarの設定
 (use-package dired-sidebar
   :ensure t
-  :commands (dired-sidebar-toggle-sidebar)
-  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
   :config
-  (setq dired-sidebar-use-term-integration t) ; ターミナル統合
-  (setq dired-sidebar-use-custom-font t)     ; カスタムフォント
-  (setq dired-sidebar-show-hidden-files t)   ; 隠しファイルを表示
-  (setq dired-sidebar-width 20)
-  ;; Emacs 29ではウィンドウ管理に関する機能が改善されているため、以下の設定を検討
-  (when (featurep 'pixel-scroll)
-    (pixel-scroll-precision-mode 1))) ; スムーズスクロールを有効化
-
+  (setq dired-sidebar-theme 'nerd-icons)  ;; テーマをnerd-iconsに設定
+  (add-hook 'dired-sidebar-mode-hook 'dired-sidebar-refresh))
+; nerd-icons-diredの設定
 (use-package nerd-icons-dired
-  :straight t
-  :hook (dired-mode . nerd-icons-dired-mode))
+  :ensure t
+  :after dired
+  :hook (dired-sidebar-mode . nerd-icons-dired-mode))
 
 ;; バックアップ設定
 (setq make-backup-files nil)       ; バックアップファイルを無効化
