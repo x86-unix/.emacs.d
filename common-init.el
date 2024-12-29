@@ -58,10 +58,9 @@
   (when (featurep 'pixel-scroll)
     (pixel-scroll-precision-mode 1))) ; スムーズスクロールを有効化
 
-(use-package nerd-icons)
 (use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
+  :straight t
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; バックアップ設定
 (setq make-backup-files nil)       ; バックアップファイルを無効化
