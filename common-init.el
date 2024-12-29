@@ -119,3 +119,31 @@
   (recenter))
 
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
+
+;; 補完システム
+; Vertico
+(use-package vertico
+  :init
+  (vertico-mode))
+
+; Marginalia (補完候補に情報を追加)
+(use-package marginalia
+  :after vertico
+  :init
+  (marginalia-mode))
+
+; Corfu (補完フレームワーク)
+(use-package corfu
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t) ; 自動補完
+  (corfu-cycle t) ; リストを循環
+  (corfu-preview-current nil)) ; プレビュー無効化
+
+; 構文補完サポート
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
