@@ -28,14 +28,13 @@
 ; Theme
 (use-package gruvbox-theme :config (load-theme 'gruvbox-dark-hard t))
 (set-face-foreground 'font-lock-comment-face "purple")
-; Other Settings
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-startup-screen t)
-(global-display-line-numbers-mode) ; 行番号表示
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil) ; スペースでインデント
+; nerd-iconsの設定
+(use-package nerd-icons
+  :ensure t
+  :config
+  ;; フォントファイルが存在しない場合にのみインストール
+  (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
+    (nerd-icons-install-fonts)))
 ; dired-sidebarの設定
 (use-package dired-sidebar
   :ensure t
@@ -48,6 +47,14 @@
   :ensure t
   :after dired
   :hook (dired-sidebar-mode . nerd-icons-dired-mode))
+; Other Settings
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-startup-screen t)
+(global-display-line-numbers-mode) ; 行番号表示
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil) ; スペースでインデント
 
 ;; バックアップ設定
 (setq make-backup-files nil)       ; バックアップファイルを無効化
@@ -108,6 +115,4 @@
   (recenter))
 
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
-
-
 
