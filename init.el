@@ -1,6 +1,7 @@
 ;; "Use Emacs v29 with a GUI"
 
 ;; for Windows: C:\Users\ユーザー名\AppData\Roaming\.emacs.d
+; runemacs.exe
 
 ;; 共通設定の読み込み
 (when (file-exists-p "~/.emacs.d/common-init.el")

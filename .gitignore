@@ -7,6 +7,7 @@
 /elpa/*
 /recentf/*
 /straight/*
+/eshell/*
 
 # 以下のファイルを無視
 /ido.last
