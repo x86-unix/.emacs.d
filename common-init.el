@@ -156,8 +156,9 @@
 
 ; markdown mode
 (defvar previous-mode nil "記憶された前のモード")
+
 (defun markdown-mode-toggle ()
-  "Toggle markdown-mode and switch back to the previous mode when turned off."
+  "Toggle markdown-mode and switch back to the previous mode when turned off, with live preview enabled."
   (interactive)
   (if (derived-mode-p 'markdown-mode)
       (progn
@@ -166,7 +167,8 @@
           (text-mode)))              ;; 前のモードがない場合はtext-modeに
     (progn
       (setq previous-mode major-mode)  ;; 現在のモードを記憶
-      (markdown-mode))))                ;; markdown-modeをオンにする
+      (markdown-mode)                   ;; markdown-modeをオンにする
+      (markdown-live-preview-mode 1)))) ;; live previewを常に有効にする
 
 (use-package markdown-mode
   :ensure t
