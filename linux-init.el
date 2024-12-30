@@ -2,7 +2,8 @@
 ; fonts install
 (defun install-hack-font ()
   "Download and install the Hack font."
-  (let* ((font-url "https://github.com/source-foundry/Hack/releases/latest/download/Hack.zip")
+  (let* ((version "v3.003")  ;; バージョンをここで定義
+         (font-url (format "https://github.com/source-foundry/Hack/releases/download/%s/Hack-%s-ttf.zip" version version))
          (download-dir "/tmp")
          (zip-file (expand-file-name "Hack.zip" download-dir))
          (extract-dir (expand-file-name "Hack" download-dir))
