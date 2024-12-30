@@ -19,10 +19,6 @@
 ;; 日本語環境とUTF-8の設定
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8)
-; ターミナルを使用する場合のみ設定
-(when (not (display-graphic-p))
-  (set-terminal-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8))
 
 ;; UI改善
 ; Theme
@@ -67,6 +63,7 @@
 ;; 操作性
 ; Backspace even in mini buffer
 (define-key key-translation-map (kbd "C-h") (kbd "<DEL>"))
+
 ; Resize Window
 (defun window-resizer ()
   "Resize the selected window interactively."
@@ -101,6 +98,7 @@
          ((= c ?q)
           (minibuffer-message "Resize quit")
           (throw 'end-flag t)))))))
+
 (global-set-key (kbd "C-c w") 'window-resizer)
 
 ; ace-window
@@ -120,11 +118,12 @@
 
 (global-set-key (kbd "C-c l") 'toggle-truncate-lines) ; ON/OFF
 
+; ファイル更新自動リロード機能
+(global-auto-revert-mode t)
+
 ;; その他機能拡張
 ; open-junk-file
-(use-package
- open-junk-file
- :config
- (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
- :bind ("C-c j" . open-junk-file))
-
+(use-package open-junk-file
+  :config
+  (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
+  :bind ("C-c j" . open-junk-file))
