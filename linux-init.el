@@ -1,41 +1,45 @@
 ;; font
-; fonts install
+; install font
 (defun install-hack-font ()
-  "Download and install the Hack font."
-  (let* ((version "v3.003")  ;; バージョン定義
-         (font-url (format "https://github.com/source-foundry/Hack/releases/download/%s/Hack-%s-ttf.zip" version version))
+  "Download and install the Hack font if not already installed."
+  (let* ((version "v3.003")  ;; バージョンをここで定義
+         (font-url (format "https://github.com/source-foundry/Hack/releases/download/%s/Hack-%s-ttf.zip" version version))  ;; URLを動的に生成
          (download-dir "/tmp")
          (zip-file (expand-file-name "Hack.zip" download-dir))
          (extract-dir (expand-file-name "Hack" download-dir))
-         (font-dir (expand-file-name "~/.local/share/fonts")))
-    ;; フォントファイルのダウンロード
-    (url-copy-file font-url zip-file t)
+         (font-dir (expand-file-name "~/.local/share/fonts"))
+         (ttf-dir (expand-file-name "ttf" extract-dir))  ;; ttfディレクトリのパスを指定
+         (fonts-installed (directory-files font-dir nil "\\.ttf$")))  ;; インストール済みフォントをチェック
 
-    ;; zipファイルを解凍
-    (when (file-exists-p zip-file)
-      (unless (file-exists-p extract-dir)
-        (make-directory extract-dir))
-      (call-process "unzip" nil nil nil zip-file "-d" extract-dir))
+    ;; フォントがすでにインストールされているか確認
+    (if (cl-some (lambda (font) (string-match "Hack" font)) fonts-installed)
+        (message "Hack font is already installed.")
+      (progn
+        ;; フォントファイルのダウンロード
+        (url-copy-file font-url zip-file t)
 
-    ;; フォントファイルを再帰的に検索してコピー
-    (let ((found-ttf-files nil))
-      (dolist (dir (list extract-dir))
-        (setq found-ttf-files
-              (append found-ttf-files
-                      (directory-files dir t "\\.ttf$" t)))
-        ;; サブディレクトリを再帰的に探索
-        (dolist (subdir (directory-files dir t "[^.]"))
-          (when (file-directory-p subdir)
-            (setq found-ttf-files
-                  (append found-ttf-files
-                          (directory-files subdir t "\\.ttf$" t)))))))
+        ;; zipファイルを解凍
+        (when (file-exists-p zip-file)
+          (unless (file-exists-p extract-dir)
+            (make-directory extract-dir))
+          (call-process "unzip" nil nil nil zip-file "-d" extract-dir))
 
-      ;; 見つかったフォントファイルをコピー
-      (dolist (font-file found-ttf-files)
-        (copy-file font-file font-dir t)))
+        ;; ttfフォルダからフォントファイルをコピー
+        (when (file-exists-p ttf-dir)  ;; ttfディレクトリが存在するか確認
+          (dolist (font-file (directory-files ttf-dir t "\\.ttf$"))  ;; .ttfファイルをリストアップ
+            (let ((font-name (file-name-nondirectory font-file)))  ;; ファイル名を取得
+              (copy-file font-file (expand-file-name font-name font-dir) t))))  ;; フォントをコピー
 
-    ;; フォントキャッシュの更新
-    (shell-command "fc-cache -f -v")))
+        ;; フォントキャッシュの更新
+        (shell-command "fc-cache -f -v")
+        (message "Hack font installed and cache updated.")))))
+
+; フォントをインストールする関数を呼び出す
+(install-hack-font)
+
+; font setting
+(set-frame-font "Hack")
+(add-to-list 'default-frame-alist '(font . "Hack-12"))
 
 ;; shell
 ; shell-pop
