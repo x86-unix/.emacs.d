@@ -153,29 +153,3 @@
   :config
   (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
   :bind ("C-c j" . open-junk-file))
-
-; markdown mode
-(defvar previous-mode nil "記憶された前のモード")
-(defun markdown-mode-toggle ()
-  "Toggle markdown-mode and switch back to the previous mode when turned off, with live preview enabled."
-  (interactive)
-  (if (derived-mode-p 'markdown-mode)
-      (progn
-        (markdown-preview-mode -1)   ;; Markdownプレビューをオフにする
-        (if previous-mode
-            (funcall previous-mode)  ;; 記憶されたモードに戻る
-          (text-mode)))              ;; 前のモードがない場合はtext-modeに
-    (progn
-      (setq previous-mode major-mode)  ;; 現在のモードを記憶
-      (markdown-mode)                   ;; Markdownモードを有効にする
-      (markdown-preview-mode +1))))     ;; Markdownプレビューをオンにする
-
-(use-package markdown-mode
-  :ensure t
-  :mode ("\\.md\\'" . markdown-mode)
-  :bind (("C-c m" . markdown-mode-toggle)))  ;; C-c mでmarkdown-modeをトグル
-
-(use-package markdown-preview-mode
-  :ensure t
-  :config
-  (setq markdown-preview-stylesheets (list "http://thomasf.github.io/solarized-css/solarized-light.min.css")))
