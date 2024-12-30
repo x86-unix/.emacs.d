@@ -1,3 +1,6 @@
+;; disable beep sound
+(setq visible-bell t)
+
 ;; パッケージ管理
 ; straight.el
 (setq straight-use-package-by-default t)
@@ -144,9 +147,28 @@
 ; ファイル更新自動リロード機能
 (global-auto-revert-mode t)
 
-;; その他機能拡張
+;; 機能拡張
 ; open-junk-file
 (use-package open-junk-file
   :config
   (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
   :bind ("C-c j" . open-junk-file))
+
+; markdown mode
+(defvar previous-mode nil "記憶された前のモード")
+(defun markdown-mode-toggle ()
+  "Toggle markdown-mode and switch back to the previous mode when turned off."
+  (interactive)
+  (if (derived-mode-p 'markdown-mode)
+      (progn
+        (if previous-mode
+            (funcall previous-mode)  ;; 記憶されたモードに戻る
+          (text-mode)))              ;; 前のモードがない場合はtext-modeに
+    (progn
+      (setq previous-mode major-mode)  ;; 現在のモードを記憶
+      (markdown-mode))))                ;; markdown-modeをオンにする
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . markdown-mode)
+  :bind (("C-c m" . markdown-mode-toggle)))  ;; C-c mでmarkdown-modeをトグル
