@@ -26,13 +26,13 @@ foreach ($fontFile in $fontFiles) {
             # フォントを一時フォルダにコピー
             $tempFontPath = "$TempFolder\$fontName"
             Copy-Item $fontFile.FullName -Destination $tempFontPath -ErrorAction Stop
-            
-            # フォントをインストール
-            $Destination.CopyHere($tempFontPath, 0x10)
+
+            # フォントをインストール（ダイアログを表示しない）
+            $Destination.CopyHere($tempFontPath, 0x10 -bor 0x4000)
 
             # インストールが完了するまで待機
             Start-Sleep -Seconds 2
-            
+
             # 成功メッセージを表示
             Write-Host "Successfully installed font: $fontName"
         } catch {
