@@ -1,3 +1,35 @@
+;; font
+; fonts install
+(defun install-hack-font ()
+  "Download and install the Hack font."
+  (let* ((font-url "https://github.com/source-foundry/Hack/releases/latest/download/Hack.zip")
+         (download-dir "/tmp")
+         (zip-file (expand-file-name "Hack.zip" download-dir))
+         (extract-dir (expand-file-name "Hack" download-dir))
+         (font-dir (expand-file-name "~/.local/share/fonts")))
+
+    ;; フォントファイルのダウンロード
+    (url-copy-file font-url zip-file t)
+
+    ;; zipファイルを解凍
+    (when (file-exists-p zip-file)
+      (unless (file-exists-p extract-dir)
+        (make-directory extract-dir))
+      (call-process "unzip" nil nil nil zip-file "-d" extract-dir))
+
+    ;; フォントファイルをコピー
+    (dolist (font-file (directory-files extract-dir t "\\.ttf$"))
+      (copy-file font-file font-dir t))
+
+    ;; フォントキャッシュの更新
+    (shell-command "fc-cache -f -v")))
+; フォントをインストールする関数を呼び出す
+(install-hack-font)
+
+; font setting
+(set-frame-font "Hack")
+(add-to-list 'default-frame-alist '(font . "Hack-12")
+
 ;; shell
 ; shell-pop
 (use-package shell-pop

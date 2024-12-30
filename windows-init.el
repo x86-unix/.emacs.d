@@ -1,3 +1,8 @@
+;; font
+; font setting
+(set-frame-font "BIZ UDゴシック")
+(add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
+
 ;; shell
 ; shell-popの設定
 (use-package shell-pop

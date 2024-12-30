@@ -1,3 +1,8 @@
+;; font
+; font setting
+(set-frame-font "Osaka")
+(add-to-list 'default-frame-alist '(font . "Osaka-12"))
+
 ;; shell
 ; shell-pop
 (use-package shell-pop
