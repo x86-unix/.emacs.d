@@ -1,13 +1,24 @@
-# 現在のユーザーのプロファイルパスを取得
-$userProfile = [System.Environment]::GetFolderPath('UserProfile')
+# 第一引数を取得。指定されていない場合はエラーメッセージを表示して終了
+param (
+    [string]$SourceDir
+)
 
-# ソースディレクトリとフォルダパスを生成
-$SourceDir   = "$userProfile\AppData\Roaming\"
-$Source      = "$userProfile\AppData\Roaming\*.ttf"
+# スクリプト自身のファイル名を取得
+$scriptName = $MyInvocation.MyCommand.Name
+
+# 現在のユーザー名を取得
+$currentUserName = [System.Environment]::GetFolderPath('UserProfile').Split('\')[-1]
+
+if (-not $SourceDir) {
+    Write-Host "エラー: ソースディレクトリを指定してください。" -ForegroundColor Red
+    Write-Host "例: .\$scriptName 'C:\Users\$currentUserName\Documents\Fonts\'" -ForegroundColor Yellow
+    Write-Host "または: .\$scriptName 'C:\Users\$currentUserName\AppData\Roaming\'" -ForegroundColor Yellow
+    exit 1
+}
+
+# ソースファイルのパスを生成
+$Source      = "$SourceDir*.ttf"
 $TempFolder  = "C:\Windows\Temp\Fonts"
-
-# ソースディレクトリの作成
-New-Item -ItemType Directory -Force -Path $SourceDir
 
 # 一時フォルダの作成
 New-Item $TempFolder -Type Directory -Force | Out-Null
