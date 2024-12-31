@@ -23,31 +23,10 @@
 (set-language-environment "Japanese")
 (prefer-coding-system 'utf-8)
 
-;; UI改善
+;; UI
 ; Theme
 (use-package gruvbox-theme :config (load-theme 'gruvbox-dark-hard t))
 (set-face-foreground 'font-lock-comment-face "purple")
-
-; nerd-iconsの設定
-(use-package nerd-icons
-  :ensure t
-  :config
-  (unless (or (file-exists-p "~/NFM.ttf")
-              (file-exists-p "~/.local/share/fonts/NFM.ttf"))
-    (nerd-icons-install-fonts)))
-
-; dired-sidebarの設定
-(use-package dired-sidebar
-  :ensure t
-  :bind (("C-c t" . dired-sidebar-toggle-sidebar))
-  :config
-  (setq dired-sidebar-theme 'nerd-icons))
-
-; nerd-icons-diredの設定
-(use-package nerd-icons-dired
-  :ensure t
-  :after dired
-  :hook (dired-sidebar-mode . nerd-icons-dired-mode))
 
 ; Other Settings
 (menu-bar-mode -1)
