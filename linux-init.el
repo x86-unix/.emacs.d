@@ -44,7 +44,7 @@
 ; フォントキャッシュの更新関数
 (defun update-font-cache ()
   "Update the font cache."
-  (shell-command "fc-cache -f -v")
+  (start-process "font-cache-update" nil "fc-cache" "-f" "-v")
   (message "Font cache updated."))
 
 (defun install-hack-font ()
