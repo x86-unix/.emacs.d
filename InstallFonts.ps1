@@ -12,7 +12,7 @@ $currentUserName = [System.Environment]::GetFolderPath('UserProfile').Split('\')
 if (-not $SourceDir) {
     Write-Host "エラー: ソースディレクトリを指定してください。" -ForegroundColor Red
     Write-Host "例: .\$scriptName 'C:\Users\$currentUserName\Documents\Fonts\'" -ForegroundColor Yellow
-    Write-Host "または: .\$scriptName 'C:\Users\$currentUserName\AppData\Roaming\'" -ForegroundColor Yellow
+    Write-Host "または: .\$scriptName 'C:\Users\$currentUserName\AppData\Local\share\fonts\'" -ForegroundColor Yellow
     exit 1
 }
 

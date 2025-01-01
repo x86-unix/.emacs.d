@@ -1,8 +1,3 @@
-;; font
-; fontの設定
-(set-frame-font "BIZ UDゴシック")
-(add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
-
 ;; UI
 ; nerd-icons-install-fonts
 (defun my-nerd-icons-install-fonts (original-fun &optional pfx)
@@ -70,3 +65,19 @@
     (setq comint-input-ignoredups t)
     (setq comint-process-echoes t))  ;; コマンドをエコーしない
   (add-hook 'shell-mode-hook 'my/shell-mode-setup))
+
+;; font
+; fontの設定
+(set-frame-font "BIZ UDゴシック")
+(add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
+
+; fontのinstall
+(defun run-install-fonts ()
+  "Run the InstallFonts.ps1 script with the specified font directory."
+  (let ((script-path (expand-file-name "InstallFonts.ps1" user-emacs-directory))  ;; .emacs.d 配下のパス
+        (font-dir "C:\\Users\\yasu\\AppData\\Local\\share\\fonts\\"))
+    (shell-command (concat "powershell.exe -ExecutionPolicy Bypass -File " 
+                           (shell-quote-argument script-path) " " 
+                           (shell-quote-argument font-dir)))))
+
+
