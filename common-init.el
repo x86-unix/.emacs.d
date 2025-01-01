@@ -30,8 +30,8 @@
        (list
         '(width . 180)   ; window width
         '(height . 50)   ; window height
-        '(top . 0)       ; window position from the top
-        '(left . 0)      ; window position from the left (必要に応じて設定)
+        '(top . 20)       ; window position from the top
+        '(left . 20)      ; window position from the left (必要に応じて設定)
         )
        initial-frame-alist))
 
@@ -62,6 +62,7 @@
 (tool-bar-mode -1) ; ツールバーを非表示にする
 (scroll-bar-mode -1) ; スクロールバーを非表示にする
 (setq inhibit-startup-screen t) ; スタートアップスクリーンを表示しない
+(setq initial-scratch-message "") ; scratchスタートアップMSGを表示しない
 (global-display-line-numbers-mode) ; 行番号を表示する
 (setq-default tab-width 4) ; タブの幅を4スペースに設定
 (setq-default indent-tabs-mode nil) ; インデントをスペースで行う
