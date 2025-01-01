@@ -71,14 +71,12 @@
 (set-frame-font "BIZ UDゴシック")
 (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
 
-; fontのinstall
-;; PowerShellスクリプトを実行する関数
-(defun run-powershell-script ()
-  (let ((script-path "C:\\Users\\yasu\\AppData\\Roaming\\.emacs.d\\InstallFonts.ps1")
-        (fonts-path "C:\\Users\\yasu\\AppData\\Local\\share\\fonts\\"))
-    (start-process "powershell" nil "pwsh.exe" "-ExecutionPolicy" "Bypass" "-File" script-path fonts-path)))
+; ユーザーフォントのインストール
+; PowerShellスクリプトを実行する関数
+(defun run-powershell-script (script-path fonts-path)
+  (start-process "powershell" nil "pwsh.exe" "-ExecutionPolicy" "Bypass" "-File" script-path fonts-path))
 
-;; Emacs起動時にスクリプトを実行
-(run-powershell-script)
-
-
+(let ((script-path (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\InstallFonts.ps1"))
+      (fonts-path (concat (getenv "USERPROFILE") "\\AppData\\Local\\share\\fonts\\")))
+  ;; スクリプト実行
+  (run-powershell-script script-path fonts-path))
