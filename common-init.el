@@ -142,6 +142,12 @@
 ; ファイル更新自動リロード機能
 (global-auto-revert-mode t)
 
+; ファイル履歴
+(use-package recentf-ext
+  :config
+  (setq recentf-max-saved-items 100) ; 最大100件の履歴を保存
+  :bind ("C-c h" . recentf-open-files))
+
 ;; 機能拡張
 ; open-junk-file
 (use-package open-junk-file
