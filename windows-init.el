@@ -9,7 +9,8 @@
   :ensure t
   :config
   (unless (file-exists-p "~/NFM.ttf")
-    (nerd-icons-install-fonts)))
+    (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t))) ; Auto reply 'yes'
+      (nerd-icons-install-fonts))))
 
 ; dired-sidebarの設定
 (use-package dired-sidebar
