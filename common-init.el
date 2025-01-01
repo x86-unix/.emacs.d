@@ -67,6 +67,7 @@
 (setq-default tab-width 4) ; タブの幅を4スペースに設定
 (setq-default indent-tabs-mode nil) ; インデントをスペースで行う
 (display-time-mode t) ; 時刻を表示する
+(setq warning-minimum-level :error) ; エラーメッセージのみ表示
 
 ; 空白等の表示
 (use-package whitespace
