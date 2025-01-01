@@ -25,12 +25,25 @@
 
 ;; UI
 ; Theme
-(use-package gruvbox-theme :config (load-theme 'gruvbox-dark-hard t))
-(set-face-foreground 'font-lock-comment-face "purple")
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-one t)) ;; ここで好きなテーマを選択
+
+(use-package doom-modeline
+  :ensure t
+  :init
+  (doom-modeline-mode 1)) ;; doom-modelineを有効化
+
+;; コメントの色を設定
+(custom-set-faces
+ '(font-lock-comment-face ((t (:foreground "#b16286"))))) ;; コメントの色
+
 ; smartparens 
 (use-package
  smartparens
  :config (require 'smartparens-config) (smartparens-global-mode t))
+
 ; Other Settings
 (menu-bar-mode -1) ; メニューバーを非表示にする
 (tool-bar-mode -1) ; ツールバーを非表示にする
