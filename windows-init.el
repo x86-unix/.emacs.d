@@ -72,12 +72,13 @@
 (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
 
 ; fontのinstall
-(defun run-install-fonts ()
-  "Run the InstallFonts.ps1 script with the specified font directory."
-  (let ((script-path (expand-file-name "InstallFonts.ps1" user-emacs-directory))  ;; .emacs.d 配下のパス
-        (font-dir "C:\\Users\\yasu\\AppData\\Local\\share\\fonts\\"))
-    (shell-command (concat "powershell.exe -ExecutionPolicy Bypass -File " 
-                           (shell-quote-argument script-path) " " 
-                           (shell-quote-argument font-dir)))))
+;; PowerShellスクリプトを実行する関数
+(defun run-powershell-script ()
+  (let ((script-path "C:\\Users\\yasu\\AppData\\Roaming\\.emacs.d\\InstallFonts.ps1")
+        (fonts-path "C:\\Users\\yasu\\AppData\\Local\\share\\fonts\\"))
+    (start-process "powershell" nil "pwsh.exe" "-ExecutionPolicy" "Bypass" "-File" script-path fonts-path)))
+
+;; Emacs起動時にスクリプトを実行
+(run-powershell-script)
 
 
