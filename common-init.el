@@ -27,16 +27,19 @@
 ; Theme
 (use-package gruvbox-theme :config (load-theme 'gruvbox-dark-hard t))
 (set-face-foreground 'font-lock-comment-face "purple")
-
+; smartparens 
+(use-package
+ smartparens
+ :config (require 'smartparens-config) (smartparens-global-mode t))
 ; Other Settings
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-startup-screen t)
-(global-display-line-numbers-mode) ; 行番号表示
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil) ; スペースでインデント
-(display-time-mode t)
+(menu-bar-mode -1) ; メニューバーを非表示にする
+(tool-bar-mode -1) ; ツールバーを非表示にする
+(scroll-bar-mode -1) ; スクロールバーを非表示にする
+(setq inhibit-startup-screen t) ; スタートアップスクリーンを表示しない
+(global-display-line-numbers-mode) ; 行番号を表示する
+(setq-default tab-width 4) ; タブの幅を4スペースに設定
+(setq-default indent-tabs-mode nil) ; インデントをスペースで行う
+(display-time-mode t) ; 時刻を表示する
 
 ; 空白等の表示
 (use-package whitespace
