@@ -24,6 +24,19 @@
 (prefer-coding-system 'utf-8)
 
 ;; UI
+; Window size and position
+(setq initial-frame-alist
+      (append
+       (list
+        '(width . 180)   ; window width
+        '(height . 50)   ; window height
+        '(top . 0)       ; window position from the top
+        '(left . 0)      ; window position from the left (必要に応じて設定)
+        )
+       initial-frame-alist))
+
+(setq default-frame-alist initial-frame-alist)
+
 ; Theme
 (use-package doom-themes
   :ensure t
