@@ -135,3 +135,13 @@
   :config
   (setq open-junk-file-format "~/.emacs.d/junk/%Y-%m-%d-%H%M%S")
   :bind ("C-c j" . open-junk-file))
+
+; Flycheck
+(use-package flycheck
+  :init
+  (global-flycheck-mode)  ;; Flycheckを全体で有効化
+  :config
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))  ;; 自動チェックの設定
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))  ;; 無効にするチェックを指定
+  (setq flycheck-idle-change-delay 0.5)  ;; チェックの遅延時間を設定
+)
