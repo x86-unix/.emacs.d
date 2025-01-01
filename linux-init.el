@@ -42,12 +42,14 @@
 (add-to-list 'default-frame-alist '(font . "Hack-12"))
 
 ;; UI
-; nerd-iconsの設定
+; nerd-icons-install-fonts
 (use-package nerd-icons
   :ensure t
   :config
-  (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
-    (nerd-icons-install-fonts)))
+  (let ((font-dest (expand-file-name "~/.local/share/fonts/")))
+    (unless (file-exists-p (expand-file-name "NFM.ttf" font-dest))
+      (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t))) ; 自動で'yes'返答
+        (nerd-icons-install-fonts)))))
 
 ; dired-sidebarの設定
 (use-package dired-sidebar

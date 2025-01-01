@@ -4,7 +4,7 @@
 (add-to-list 'default-frame-alist '(font . "Osaka-12"))
 
 ;; UI
-; nerd-iconsの設定
+; nerd-icons-install-fonts
 (use-package nerd-icons
   :ensure t
   :config
