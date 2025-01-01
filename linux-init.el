@@ -1,46 +1,3 @@
-;; font
-; install font
-(defun install-hack-font ()
-  "Download and install the Hack font if not already installed."
-  (let* ((version "v3.003")  ;; バージョンをここで定義
-         (font-url (format "https://github.com/source-foundry/Hack/releases/download/%s/Hack-%s-ttf.zip" version version))  ;; URLを動的に生成
-         (download-dir "/tmp")
-         (zip-file (expand-file-name "Hack.zip" download-dir))
-         (extract-dir (expand-file-name "Hack" download-dir))
-         (font-dir (expand-file-name "~/.local/share/fonts"))
-         (ttf-dir (expand-file-name "ttf" extract-dir))  ;; ttfディレクトリのパスを指定
-         (fonts-installed (directory-files font-dir nil "\\.ttf$")))  ;; インストール済みフォントをチェック
-
-    ;; フォントがすでにインストールされているか確認
-    (if (cl-some (lambda (font) (string-match "Hack" font)) fonts-installed)
-        (message "Hack font is already installed.")
-      (progn
-        ;; フォントファイルのダウンロード
-        (url-copy-file font-url zip-file t)
-
-        ;; zipファイルを解凍
-        (when (file-exists-p zip-file)
-          (unless (file-exists-p extract-dir)
-            (make-directory extract-dir))
-          (call-process "unzip" nil nil nil zip-file "-d" extract-dir))
-
-        ;; ttfフォルダからフォントファイルをコピー
-        (when (file-exists-p ttf-dir)  ;; ttfディレクトリが存在するか確認
-          (dolist (font-file (directory-files ttf-dir t "\\.ttf$"))  ;; .ttfファイルをリストアップ
-            (let ((font-name (file-name-nondirectory font-file)))  ;; ファイル名を取得
-              (copy-file font-file (expand-file-name font-name font-dir) t))))  ;; フォントをコピー
-
-        ;; フォントキャッシュの更新
-        (shell-command "fc-cache -f -v")
-        (message "Hack font installed and cache updated.")))))
-
-; フォントをインストールする関数を呼び出す
-(install-hack-font)
-
-; fontの設定
-(set-frame-font "Hack")
-(add-to-list 'default-frame-alist '(font . "Hack-12"))
-
 ;; UI
 ; nerd-icons-install-fonts
 (use-package nerd-icons
@@ -48,7 +5,7 @@
   :config
   (let ((font-dest (expand-file-name "~/.local/share/fonts/")))
     (unless (file-exists-p (expand-file-name "NFM.ttf" font-dest))
-      (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t))) ; 自動で'yes'返答
+      (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t)))
         (nerd-icons-install-fonts)))))
 
 ; dired-sidebarの設定
@@ -73,7 +30,7 @@
           "*ansi-term*"
           (lambda () (ansi-term "/bin/bash"))))
   (setq shell-pop-full-span t)
-  (setq shell-pop-window-size 20) ;; Specify window size as 20% of screen height
+  (setq shell-pop-window-size 20)
   :bind (("C-c s" . shell-pop))
   :config
   (defun my/shell-mode-setup ()
@@ -83,3 +40,49 @@
     (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
   (add-hook 'shell-mode-hook 'my/shell-mode-setup))
 
+;; font
+; フォントキャッシュの更新関数
+(defun update-font-cache ()
+  "Update the font cache."
+  (shell-command "fc-cache -f -v")
+  (message "Font cache updated."))
+
+(defun install-hack-font ()
+  "Download and install the Hack font if not already installed."
+  (let* ((version "v3.003")
+         (font-url (format "https://github.com/source-foundry/Hack/releases/download/%s/Hack-%s-ttf.zip" version version))
+         (download-dir "/tmp")
+         (zip-file (expand-file-name "Hack.zip" download-dir))
+         (extract-dir (expand-file-name "Hack" download-dir))
+         (font-dir (expand-file-name "~/.local/share/fonts"))
+         (ttf-dir (expand-file-name "ttf" extract-dir))
+         (fonts-installed (directory-files font-dir nil "\\.ttf$")))
+
+    ;; フォントがすでにインストールされているか確認
+    (if (cl-some (lambda (font) (string-match "Hack" font)) fonts-installed)
+        (message "Hack font is already installed.")
+      (progn
+        ;; フォントファイルのダウンロード
+        (url-copy-file font-url zip-file t)
+
+        ;; zipファイルを解凍
+        (when (file-exists-p zip-file)
+          (unless (file-exists-p extract-dir)
+            (make-directory extract-dir))
+          (call-process "unzip" nil nil nil zip-file "-d" extract-dir))
+
+        ;; ttfフォルダからフォントファイルをコピー
+        (when (file-exists-p ttf-dir)
+          (dolist (font-file (directory-files ttf-dir t "\\.ttf$"))
+            (let ((font-name (file-name-nondirectory font-file)))
+              (copy-file font-file (expand-file-name font-name font-dir) t))))))))
+
+; フォントをインストールする関数を呼び出す
+(install-hack-font)
+
+; fontの設定
+(set-frame-font "Hack")
+(add-to-list 'default-frame-alist '(font . "Hack-12"))
+
+; フォントキャッシュの更新
+(update-font-cache)
