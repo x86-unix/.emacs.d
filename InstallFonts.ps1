@@ -19,15 +19,13 @@ if (-not $SourceDir) {
 # ソースファイルのパスを生成
 $Source      = "$SourceDir*.ttf"
 $TempFolder  = "C:\Windows\Temp\Fonts"
+$FontsDir    = "C:\Users\$currentUserName\AppData\Local\Microsoft\Windows\Fonts"
 
 # 一時フォルダの作成
 New-Item $TempFolder -Type Directory -Force | Out-Null
 
 # フォントファイルの取得
 $fontFiles = Get-ChildItem -Path $Source -Include '*.ttf','*.ttc','*.otf' -Recurse
-
-# インストールされているフォントの名前を取得
-$installedFonts = [System.Drawing.FontFamily]::Families | Select-Object -Property Name
 
 # フォント名を取得する関数
 function Get-FontNameFromFile {
@@ -47,9 +45,9 @@ foreach ($fontFile in $fontFiles) {
     Write-Host "Font name from file: $fontName"
 
     # フォントがすでにインストールされているか確認
-    $isInstalled = $installedFonts | Where-Object { $_.Name -eq $fontName }
+    $installedFontPath = Join-Path -Path $FontsDir -ChildPath $fontFile.Name
 
-    if (-not $isInstalled) {
+    if (-not (Test-Path $installedFontPath)) {
         try {
             # フォントを一時フォルダにコピー
             $tempFontPath = "$TempFolder\$($fontFile.Name)"
