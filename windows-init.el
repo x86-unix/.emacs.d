@@ -4,13 +4,36 @@
 (add-to-list 'default-frame-alist '(font . "BIZ UDゴシック-12"))
 
 ;; UI
-; nerd-iconsの設定
+; nerd-icons-install-fonts
+(defun my-nerd-icons-install-fonts (original-fun &optional pfx)
+  "Override `nerd-icons-install-fonts` to specify the font installation directory for Windows."
+  (let* ((url-format "https://raw.githubusercontent.com/rainstormstudio/nerd-icons.el/main/fonts/%s")
+         (font-dest (concat (getenv "USERPROFILE") "\\AppData\\Local\\share\\fonts\\" nerd-icons-fonts-subdirectory))
+         (known-dest? (stringp font-dest)))
+
+    (unless (file-directory-p font-dest) (mkdir font-dest t))
+
+    (mapc (lambda (font)
+            (url-copy-file (format url-format font) (expand-file-name font font-dest) t))
+          nerd-icons-font-names)
+
+    (when known-dest?
+      (message "Fonts downloaded. Please restart your application to see the changes."))
+
+    (message "%s Successfully %s `nerd-icons' fonts to `%s'!"
+             (nerd-icons-wicon "nf-weather-stars" :v-adjust 0.0)
+             (if known-dest? "installed" "downloaded")
+             font-dest)))
+
+(advice-add 'nerd-icons-install-fonts :around #'my-nerd-icons-install-fonts)
+
 (use-package nerd-icons
   :ensure t
   :config
-  (unless (file-exists-p "~/NFM.ttf")
-    (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t))) ; Auto reply 'yes'
-      (nerd-icons-install-fonts))))
+  (let ((font-dest (concat (getenv "USERPROFILE") "\\AppData\\Local\\share\\fonts\\" nerd-icons-fonts-subdirectory)))
+    (unless (file-exists-p (expand-file-name "NFM.ttf" font-dest))
+      (cl-letf (((symbol-function 'yes-or-no-p) (lambda (prompt) t))) ; 自動で'yes'返答
+        (nerd-icons-install-fonts)))))
 
 ; dired-sidebarの設定
 (use-package dired-sidebar
