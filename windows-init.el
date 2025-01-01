@@ -1,3 +1,6 @@
+;; default-directory
+(setq default-directory (getenv "USERPROFILE"))
+
 ;; UI
 ; nerd-icons-install-fonts
 (defun my-nerd-icons-install-fonts (original-fun &optional pfx)

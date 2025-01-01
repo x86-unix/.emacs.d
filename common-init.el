@@ -28,7 +28,7 @@
 (setq initial-frame-alist
       (append
        (list
-        '(width . 180)   ; window width
+        '(width . 150)   ; window width
         '(height . 50)   ; window height
         '(top . 20)       ; window position from the top
         '(left . 20)      ; window position from the left (必要に応じて設定)

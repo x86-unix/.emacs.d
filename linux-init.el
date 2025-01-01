@@ -1,3 +1,6 @@
+;; default-directory
+(setq default-directory "~/")
+
 ;; UI
 ; nerd-icons-install-fonts
 (use-package nerd-icons
