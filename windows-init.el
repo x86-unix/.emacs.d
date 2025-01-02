@@ -69,6 +69,11 @@
     (setq comint-process-echoes t))  ;; コマンドをエコーしない
   (add-hook 'shell-mode-hook 'my/shell-mode-setup))
 
+;; term-mode でのキーバインド設定
+(add-hook 'term-mode-hook
+          (lambda ()
+            (define-key term-raw-map (kbd "C-c t") 'dired-sidebar-toggle-sidebar)))
+
 ;; font
 ; fontの設定
 (set-frame-font "BIZ UDゴシック")
