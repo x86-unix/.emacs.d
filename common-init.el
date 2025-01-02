@@ -105,16 +105,8 @@
   "Resize the selected window interactively."
   (interactive)
   (let ((window-obj (selected-window))
-        (current-width (window-width))
-        (current-height (window-height))
-        (dx
-         (if (= (nth 0 (window-edges)) 0)
-             1
-           -1))
-        (dy
-         (if (= (nth 1 (window-edges)) 0)
-             1
-           -1))
+        (dx (if (= (nth 0 (window-edges)) 0) 1 -1))
+        (dy (if (= (nth 1 (window-edges)) 0) 1 -1))
         c)
     (catch 'end-flag
       (while t
