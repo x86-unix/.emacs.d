@@ -43,6 +43,11 @@
     (define-key shell-mode-map (kbd "C-n") 'comint-next-input))
   (add-hook 'shell-mode-hook 'my/shell-mode-setup))
 
+;; term-mode でのキーバインド設定
+(add-hook 'term-mode-hook
+          (lambda ()
+            (define-key term-raw-map (kbd "C-c t") 'dired-sidebar-toggle-sidebar)))
+
 ;; font
 ; フォントキャッシュの更新関数
 (defun update-font-cache ()
