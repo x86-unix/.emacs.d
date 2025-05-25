@@ -2,7 +2,7 @@
 (setq visible-bell t)
 
 ;; Emacs場で、C-j を無効にする (OS側のSKKの動作を有効にする為)
-(global-unset-key (kbd "C-j"))
+(global-set-key (kbd "C-j") nil)
 
 ;; パッケージ管理
 ; straight.el
