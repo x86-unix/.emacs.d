@@ -1,6 +1,9 @@
 ;; disable beep sound
 (setq visible-bell t)
 
+;; Emacs場で、C-j を無効にする (OS側のSKKの動作を有効にする為)
+(global-unset-key (kbd "C-j"))
+
 ;; パッケージ管理
 ; straight.el
 (setq straight-use-package-by-default t)
