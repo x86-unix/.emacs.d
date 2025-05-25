@@ -7,8 +7,7 @@
 ; nerd-icons-install-fonts
 (use-package nerd-icons
   :ensure t
-  :config
-  (nerd-icons-install-fonts))
+  )
 
 ; dired-sidebarの設定
 (use-package dired-sidebar
