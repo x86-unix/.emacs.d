@@ -8,8 +8,7 @@
 (use-package nerd-icons
   :ensure t
   :config
-  (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
-    (nerd-icons-install-fonts)))
+  (nerd-icons-install-fonts))
 
 ; dired-sidebarの設定
 (use-package dired-sidebar
